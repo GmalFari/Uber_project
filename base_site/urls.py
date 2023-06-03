@@ -7,10 +7,12 @@ from driver_management.views import MyModelList
 from enquiry.views import MyEnquiryList, MyEnquiryDelete, MyEnquiryUpdate, MyEnquiryGetList
 from booking.views import MyBookingList
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+from user_master.views import home
 
 schema_view = get_swagger_view(title='API Documentation')
 
 urlpatterns = [
+    path("", home, name='home'),
     path("admin/", admin.site.urls),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='api-docs'),
