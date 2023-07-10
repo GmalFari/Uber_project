@@ -6,7 +6,7 @@ class AddClient(models.Model):
     mobile_number = models.CharField(max_length=13)
     alternate_number = models.CharField(max_length=13, null=True, blank=True)
     email_id = models.EmailField()
-    reference = models.CharField(choices=(("1", "google"),("2", "Facebook"), ("3", "Website"),
+    reference = models.CharField(choices=(("1", "google"), ("2", "Facebook"), ("3", "Website"),
                                           ("4", "Previous Client"), ("5", "Other")),
                                  max_length=10)
 
