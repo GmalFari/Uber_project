@@ -19,7 +19,7 @@ class Country(models.Model):
 class State(models.Model):
     state_code = models.CharField(max_length=5, primary_key=True)
     state = models.CharField(max_length=30, unique=True)
-    country = models.ForeignKey(Country, to_field='country_name', on_delete=models.CASCADE)
+    country = models.ForeignKey(Country, to_field='country_code', on_delete=models.CASCADE)
     status = models.BooleanField(default=True)
 
     class Meta:
@@ -34,7 +34,7 @@ class City(models.Model):
     city_code = models.CharField(max_length=5, primary_key=True)
     city = models.CharField(max_length=30, unique=True)
     state = models.ForeignKey(State, to_field='state', on_delete=models.CASCADE)
-    country = models.ForeignKey(Country, to_field='country_name', on_delete=models.CASCADE)
+    country = models.ForeignKey(Country, to_field='country_code', on_delete=models.CASCADE)
     status = models.BooleanField(default=True)
 
     class Meta:
@@ -49,7 +49,7 @@ class Location(models.Model):
     location = models.CharField(max_length=30)
     city = models.ForeignKey(City, to_field='city', on_delete=models.CASCADE)
     state = models.ForeignKey(State, to_field='state', on_delete=models.CASCADE)
-    country = models.ForeignKey(Country, to_field='country_name', on_delete=models.CASCADE)
+    country = models.ForeignKey(Country, to_field='country_code', on_delete=models.CASCADE)
     status = models.BooleanField(default=True)
 
     class Meta:
@@ -64,7 +64,7 @@ class Zone(models.Model):
     zone_name = models.CharField(max_length=30, unique=True)
     city = models.ForeignKey(City, to_field='city', on_delete=models.CASCADE)
     state = models.ForeignKey(State, to_field='state', on_delete=models.CASCADE)
-    country = models.ForeignKey(Country, to_field='country_name', on_delete=models.CASCADE)
+    country = models.ForeignKey(Country, to_field='country_code', on_delete=models.CASCADE)
     status = models.BooleanField(default=True)
 
     class Meta:
@@ -76,7 +76,7 @@ class Zone(models.Model):
 
 
 class Branch(models.Model):
-    country = models.ForeignKey(Country, to_field='country_name', on_delete=models.CASCADE)
+    country = models.ForeignKey(Country, to_field='country_code', on_delete=models.CASCADE)
     state = models.ForeignKey(State, to_field='state', on_delete=models.CASCADE)
     city = models.ForeignKey(City, to_field='city', on_delete=models.CASCADE)
     branch_name = models.CharField(max_length=30, unique=True)
@@ -113,7 +113,7 @@ class UserMaster(models.Model):
 
 class ZoneMapping(models.Model):
     zone = models.ForeignKey(Zone, to_field='zone_name', on_delete=models.CASCADE)
-    country = models.ForeignKey(Country, to_field='country_name', on_delete=models.CASCADE)
+    country = models.ForeignKey(Country, to_field='country_code', on_delete=models.CASCADE)
     state = models.ForeignKey(State, to_field='state', on_delete=models.CASCADE)
     city = models.ForeignKey(City, to_field='city', on_delete=models.CASCADE)
 

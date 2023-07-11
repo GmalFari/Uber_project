@@ -23,13 +23,17 @@ class MyCountryGetList(APIView):
 
 
 class MyCountryUpdate(APIView):
+    serializer_class = MyCountrySerializer
+
     def put(self, request, pk):
         try:
             country = Country.objects.get(pk=pk)
-            serializer = MyCountrySerializer(country, data=request.data, partial=True)
+            serializer = MyCountrySerializer(country, data=request.data)
+            print(request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
+            print(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Country.DoesNotExist:
             return Response({'error': 'Country not found'}, status=status.HTTP_404_NOT_FOUND)
@@ -61,10 +65,12 @@ class MyStateGetList(APIView):
 
 
 class MyStateUpdate(APIView):
+    serializer_class = MyStateSerializer
+
     def put(self, request, pk):
         try:
             state = State.objects.get(pk=pk)
-            serializer = MyCountrySerializer(state, data=request.data)
+            serializer = MyStateSerializer(state, data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
@@ -81,6 +87,86 @@ class MyStateDelete(APIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
         except State.DoesNotExist:
             return Response({'error': 'State not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class MyCityList(generics.ListCreateAPIView):
+    queryset = City.objects.all()
+    serializer_class = MyCitySerializer
+
+
+class MyCityGetList(APIView):
+    def get(self, request, pk):
+        try:
+            city = Location.objects.get(pk=pk)
+            serializer = MyCitySerializer(city)
+            return Response(serializer.data)
+        except Location.DoesNotExist:
+            return Response({'error': 'City not found'}, status=404)
+
+
+class MyCityUpdate(APIView):
+    serializer_class = MyCitySerializer
+
+    def put(self, request, pk):
+        try:
+            city = City.objects.get(pk=pk)
+            serializer = MyCitySerializer(city, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except City.DoesNotExist:
+            return Response({'error': 'City not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class MyCityDelete(APIView):
+    def delete(self, request, pk):
+        try:
+            city = City.objects.get(pk=pk)
+            city.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Location.DoesNotExist:
+            return Response({'error': 'City not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class MyLocationList(generics.ListCreateAPIView):
+    queryset = Location.objects.all()
+    serializer_class = MyLocationSerializer
+
+
+class MyLocationGetList(APIView):
+    def get(self, request, id):
+        try:
+            location = Location.objects.get(id=id)
+            serializer = MyLocationSerializer(location)
+            return Response(serializer.data)
+        except Location.DoesNotExist:
+            return Response({'error': 'Location not found'}, status=404)
+
+
+class MyLocationUpdate(APIView):
+    serializer_class = MyLocationSerializer
+
+    def put(self, request, id):
+        try:
+            location = Location.objects.get(id=id)
+            serializer = MyLocationSerializer(location, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Location.DoesNotExist:
+            return Response({'error': 'Location not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class MyLocationDelete(APIView):
+    def delete(self, request, id):
+        try:
+            location = Location.objects.get(id=id)
+            location.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Location.DoesNotExist:
+            return Response({'error': 'Location not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
 def home(request):

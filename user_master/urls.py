@@ -10,4 +10,12 @@ urlpatterns = [
     path('state/<str:pk>/', MyStateGetList.as_view(), name='state_list_id'),
     path('state/<str:pk>/update/', MyStateUpdate.as_view(), name='state_update_list'),
     path('state/<str:pk>/delete/', MyStateDelete.as_view(), name='state_delete_list'),
+    path('city/', MyCityList.as_view(), name='city_list'),
+    path('city/<str:pk>/', MyCityGetList.as_view(), name='city_list_id'),
+    # path('city/<str:pk>/update/', MyCityUpdate.as_view(), name='city_update_list'),
+    path('city/<str:pk>/delete/', MyCityDelete.as_view(), name='city_delete_list'),
+    path('location/', MyLocationList.as_view(), name='location_list'),
+    path('location/<int:id>/', MyLocationGetList.as_view(), name='location_list_id'),
+    path('location/<int:id>/update/', MyLocationUpdate.as_view(), name='location_update_list'),
+    path('location/<int:id>/delete/', MyLocationDelete.as_view(), name='location_delete_list'),
 ]
