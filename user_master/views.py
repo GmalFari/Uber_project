@@ -21,18 +21,29 @@ class MyCountryGetList(APIView):
         except Country.DoesNotExist:
             return Response({'error': 'Country not found'}, status=404)
 
-
-class MyCountryUpdate(APIView):
-    def put(self, request, pk):
+    def patch(self, request, pk):
         try:
             country = Country.objects.get(pk=pk)
-            serializer = MyCountrySerializer(country, data=request.data, partial=True)
+            serializer = MyCountrySerializer(country,data = request.data, partial=True)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Country.DoesNotExist:
             return Response({'error': 'Country not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+# class MyCountryUpdate(APIView):
+#     def patch(self, request, pk):
+#         try:
+#             country = Country.objects.get(pk=pk)
+#             serializer = MyCountrySerializer(country,data = request.data, partial=True)
+#             if serializer.is_valid():
+#                 serializer.save()
+#                 return Response(serializer.data)
+#             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#         except Country.DoesNotExist:
+#             return Response({'error': 'Country not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
 class MyCountryDelete(APIView):

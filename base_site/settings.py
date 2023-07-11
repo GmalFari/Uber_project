@@ -20,6 +20,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "jazzmin",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -65,18 +66,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "base_site.wsgi.application"
 
-
+import environ
+env = environ.Env()
+# reading .env file
+environ.Env.read_env()
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "doh2",
-        'USER': 'postgres',
-        'PASSWORD': '@Dmin123',
-        'HOST': 'localhost',
-        'PORT':5432
+        "NAME": env('DATABASE_NAME'),
+        'USER': env('DATABASE_USER'),
+        'PASSWORD': env('DATABASE_PASSWORD'),
+        'HOST': env('DATABASE_HOST'),
+        'PORT':env('DATABASE_PORT')
+        # "NAME": "doh2",
+        # 'USER': 'postgres',
+        # 'PASSWORD': '@Dmin123',
+        # 'HOST': 'localhost',
+        # 'PORT':5432
     }
 }
 
