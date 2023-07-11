@@ -19,4 +19,7 @@ urlpatterns = [
     path('location/<int:id>/', MyLocationGetList.as_view(), name='location_list_id'),
     path('location/<int:id>/update/', MyLocationUpdate.as_view(), name='location_update_list'),
     path('location/<int:id>/delete/', MyLocationDelete.as_view(), name='location_delete_list'),
+
+    # URL for User
+    path('createuser/', createUsermaster.as_view(), name='createuser'),
 ]

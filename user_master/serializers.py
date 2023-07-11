@@ -28,3 +28,10 @@ class MyLocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Location
         fields = '__all__'
+
+
+
+class UsermasterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserMaster
+        fields = '__all__'

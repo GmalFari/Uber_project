@@ -9,9 +9,9 @@ admin.site.site_header = 'Driver On Hire'
 
 @admin.register(UserMaster)
 class UserMaster(admin.ModelAdmin):
-    list_display = ("user_name", "mobile", "email_id", "branch", "role", "status", "edit_option", "delete_option")
+    list_display = ("user_name", "mobile", "email_id", "password","branch", "role", "status", "edit_option", "delete_option")
     search_fields = ("user_name__startswith", "mobile", "status")
-    fields = ("user_name", "mobile", "email_id", ("branch", "role", "status"))
+    fields = ("user_name", "mobile", "email_id","password", ("branch", "role", "status"))
     # list_editable = ['email_id']
 
     def edit_option(self, obj):

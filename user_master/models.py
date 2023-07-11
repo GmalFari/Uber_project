@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
+from django.contrib.auth.hashers import make_password
+
 
 
 class Country(models.Model):
@@ -97,7 +99,7 @@ class Branch(models.Model):
 class UserMaster(models.Model):
     user_id = models.AutoField(primary_key=True)
     user_name = models.CharField(max_length=50)
-    password=models.CharField(max_length=30, null=True, blank=True)
+    password=models.CharField(max_length=300, null=True, blank=True)
     mobile = models.CharField(max_length=20, null=True, blank=True)
     email_id = models.EmailField(max_length=50, null=True, blank=True)
     branch = models.ForeignKey(Branch, to_field='branch_name', on_delete=models.CASCADE)
@@ -107,6 +109,10 @@ class UserMaster(models.Model):
     class Meta:
         # verbose_name = "User Master"
         verbose_name_plural = "User Master"
+    
+    def save(self, *args, **kwargs):
+        self.password = make_password(self.password)
+        super(UserMaster, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.user_name

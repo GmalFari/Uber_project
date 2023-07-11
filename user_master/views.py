@@ -4,9 +4,30 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import BasicAuthentication
 from rest_framework.response import Response
+
 from rest_framework import status
 from .models import *
 from .serializers import *
+import requests
+
+
+# Regsitering New user
+class createUsermaster(APIView):
+    def post(self, request):
+        data=request.data
+        
+        
+        serializer=UsermasterSerializer(data=data)
+        if serializer.is_valid():
+           
+            serializer.save()
+            msg="User is created"
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+       
+       
 
 
 class MyCountryList(generics.ListCreateAPIView):
