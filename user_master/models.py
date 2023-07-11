@@ -13,7 +13,7 @@ class Country(models.Model):
         verbose_name_plural = "Country"
 
     def __str__(self):
-        return self.country_name
+        return self.country_code
 
 
 class State(models.Model):
@@ -97,8 +97,9 @@ class Branch(models.Model):
 class UserMaster(models.Model):
     user_id = models.AutoField(primary_key=True)
     user_name = models.CharField(max_length=50)
-    mobile = models.CharField(max_length=20)
-    email_id = models.EmailField(max_length=50)
+    password=models.CharField(max_length=30, null=True, blank=True)
+    mobile = models.CharField(max_length=20, null=True, blank=True)
+    email_id = models.EmailField(max_length=50, null=True, blank=True)
     branch = models.ForeignKey(Branch, to_field='branch_name', on_delete=models.CASCADE)
     role = models.ForeignKey(Group, on_delete=models.CASCADE)
     status = models.BooleanField(default=True)

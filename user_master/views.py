@@ -1,6 +1,8 @@
 from django.shortcuts import render, HttpResponse
 from rest_framework import generics
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import BasicAuthentication
 from rest_framework.response import Response
 from rest_framework import status
 from .models import *
@@ -8,21 +10,31 @@ from .serializers import *
 
 
 class MyCountryList(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [BasicAuthentication]
     queryset = Country.objects.all()
     serializer_class = MyCountrySerializer
 
 
 class MyCountryGetList(APIView):
-    def get(self, request, pk):
-        try:
-            country = Country.objects.get(pk=pk)
-            serializer = MyCountrySerializer(country)
-            return Response(serializer.data)
-        except Country.DoesNotExist:
-            return Response({'error': 'Country not found'}, status=404)
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [BasicAuthentication]
+    try:
+
+        def get(self, request, pk):
+            try:
+                country = Country.objects.get(pk=pk)
+                serializer = MyCountrySerializer(country)
+                return Response(serializer.data)
+            except Country.DoesNotExist:
+                return Response({'error': 'Country not found'}, status=404)
+    except:
+        Response({'msg':'Not Authenticated'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class MyCountryUpdate(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [BasicAuthentication]
     serializer_class = MyCountrySerializer
 
     def put(self, request, pk):
@@ -97,7 +109,7 @@ class MyCityList(generics.ListCreateAPIView):
 class MyCityGetList(APIView):
     def get(self, request, pk):
         try:
-            city = Location.objects.get(pk=pk)
+            city = City.objects.get(pk=pk)
             serializer = MyCitySerializer(city)
             return Response(serializer.data)
         except Location.DoesNotExist:
