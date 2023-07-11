@@ -3,7 +3,7 @@ from .models import *
 
 
 class MyCountrySerializer(serializers.ModelSerializer):
-    country_code = serializers.CharField(max_length=5, read_only=True)
+    country_code = serializers.CharField(max_length=5, required=False)
     country_name = serializers.CharField(max_length=30, required=True)
     status = serializers.BooleanField(default=True)
 
@@ -15,7 +15,7 @@ class MyCountrySerializer(serializers.ModelSerializer):
 class MyStateSerializer(serializers.ModelSerializer):
     class Meta:
         model = State
-        fields = '__all__'
+        fields = '__all__' 
 
 
 class MyCitySerializer(serializers.ModelSerializer):
