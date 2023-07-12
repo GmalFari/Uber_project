@@ -101,7 +101,7 @@ class UserMaster(models.Model):
     ("Admin", "Admin"), 
     ("Temprory", "Temprory"), 
     ("Permanent", "Permanent"),
-    ("Reqruit", "Reqruit") 
+    ("Recruit", "Recruit") 
   )
   
     user_id = models.AutoField(primary_key=True)
