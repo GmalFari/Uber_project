@@ -30,6 +30,7 @@ class MyLocationSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+<<<<<<< Updated upstream
 class MyZoneSerializer(serializers.ModelSerializer):
     class Meta:
         model = Zone
@@ -46,3 +47,9 @@ class UsermasterSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserMaster
         fields = '__all__'
+=======
+class MyZoneSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Zone
+        fields = '__all__'
+>>>>>>> Stashed changes

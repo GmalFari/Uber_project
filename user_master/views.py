@@ -158,7 +158,7 @@ class MyLocationGetList(APIView):
             serializer = MyLocationSerializer(location)
             return Response(serializer.data)
         except Location.DoesNotExist:
-            return Response({'error': 'Location not found'}, status=404)
+            return Response({'error': 'Location not found'}, status=status.HTTP_404_NOT_FOUND)
 
     serializer_class = MyLocationSerializer
 
@@ -184,23 +184,38 @@ class MyLocationGetList(APIView):
 
 class MyZoneList(generics.ListCreateAPIView):
     queryset = Zone.objects.all()
+<<<<<<< Updated upstream
     serializer_class = MyZoneSerializer
+=======
+    serializer_class = MyZoneSerializers
+>>>>>>> Stashed changes
 
 
 class MyZoneGetList(APIView):
     def get(self, request, id):
         try:
             zone = Zone.objects.get(id=id)
+<<<<<<< Updated upstream
             serializer = MyZoneSerializer(zone)
+=======
+            serializer = MyZoneSerializers(zone)
+>>>>>>> Stashed changes
             return Response(serializer.data)
         except Zone.DoesNotExist:
             return Response({'error': 'Zone not found'}, status=status.HTTP_404_NOT_FOUND)
 
+<<<<<<< Updated upstream
     serializer_class = MyZoneSerializer
+=======
+
+class MyZoneUpdateList(APIView):
+    serializer_class = MyZoneSerializers
+>>>>>>> Stashed changes
 
     def put(self, request, id):
         try:
             zone = Zone.objects.get(id=id)
+<<<<<<< Updated upstream
             serializer = MyZoneSerializer(zone, data=request.data, partial=True)
             if serializer.is_valid():
                 serializer.save()
@@ -209,15 +224,32 @@ class MyZoneGetList(APIView):
         except Zone.DoesNotExist:
             return Response({'error': 'Zone not found'}, status=status.HTTP_404_NOT_FOUND)
 
-    def delete(self, request, id):
-        try:
-            zone = Zone.objects.get(id=id)
-            zone.delete()
-            return Response({'message': 'Object deleted'}, status=status.HTTP_204_NO_CONTENT)
+=======
+            serializer = MyZoneSerializers(zone, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
         except Zone.DoesNotExist:
             return Response({'error': 'Zone not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
+class MyZoneDelete(APIView):
+>>>>>>> Stashed changes
+    def delete(self, request, id):
+        try:
+            zone = Zone.objects.get(id=id)
+            zone.delete()
+<<<<<<< Updated upstream
+            return Response({'message': 'Object deleted'}, status=status.HTTP_204_NO_CONTENT)
+=======
+            return Response(status=status.HTTP_204_NO_CONTENT)
+>>>>>>> Stashed changes
+        except Zone.DoesNotExist:
+            return Response({'error': 'Zone not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+<<<<<<< Updated upstream
 class MyBranchList(generics.ListCreateAPIView):
     queryset = Branch.objects.all()
     serializer_class = MyBranchSerializer
@@ -254,5 +286,7 @@ class MyBranchGetList(APIView):
             return Response({'error': 'Branch does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
 
+=======
+>>>>>>> Stashed changes
 def home(request):
     return render(request, 'user_master/index.html')
