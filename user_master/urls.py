@@ -22,4 +22,5 @@ urlpatterns = [
 
     # URL for User
     path('createuser/', createUsermaster.as_view(), name='createuser'),
+    path('login/', Loginuser.as_view(), name='login'),
 ]

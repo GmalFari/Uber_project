@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import BasicAuthentication
 from rest_framework.response import Response
+from django.contrib.auth import login
 
 from rest_framework import status
 from .models import *
@@ -15,11 +16,8 @@ import requests
 class createUsermaster(APIView):
     def post(self, request):
         data=request.data
-        
-        
         serializer=UsermasterSerializer(data=data)
-        if serializer.is_valid():
-           
+        if serializer.is_valid():           
             serializer.save()
             msg="User is created"
             return Response(serializer.data,status=status.HTTP_201_CREATED)
@@ -28,6 +26,15 @@ class createUsermaster(APIView):
     
        
        
+class Loginuser(APIView):
+    def post(self, request):
+        user_name=request.data['user_name']
+        password=request.data['password']
+        if UserMaster.objects.filter(user_name=user_name, password=password).exists():
+            return Response({'User is login':user_name}, status=status.HTTP_200_OK)
+        else:
+            return Response({'msg': 'unable to login'})
+        
 
 
 class MyCountryList(generics.ListCreateAPIView):
