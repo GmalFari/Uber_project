@@ -11,7 +11,7 @@ from .serializers import *
 import requests
 
 
-# Regsitering New user
+# Registering New user
 class createUsermaster(APIView):
     def post(self, request):
         data = request.data
@@ -184,38 +184,23 @@ class MyLocationGetList(APIView):
 
 class MyZoneList(generics.ListCreateAPIView):
     queryset = Zone.objects.all()
-<<<<<<< Updated upstream
     serializer_class = MyZoneSerializer
-=======
-    serializer_class = MyZoneSerializers
->>>>>>> Stashed changes
 
 
 class MyZoneGetList(APIView):
     def get(self, request, id):
         try:
             zone = Zone.objects.get(id=id)
-<<<<<<< Updated upstream
             serializer = MyZoneSerializer(zone)
-=======
-            serializer = MyZoneSerializers(zone)
->>>>>>> Stashed changes
             return Response(serializer.data)
         except Zone.DoesNotExist:
             return Response({'error': 'Zone not found'}, status=status.HTTP_404_NOT_FOUND)
 
-<<<<<<< Updated upstream
     serializer_class = MyZoneSerializer
-=======
-
-class MyZoneUpdateList(APIView):
-    serializer_class = MyZoneSerializers
->>>>>>> Stashed changes
 
     def put(self, request, id):
         try:
             zone = Zone.objects.get(id=id)
-<<<<<<< Updated upstream
             serializer = MyZoneSerializer(zone, data=request.data, partial=True)
             if serializer.is_valid():
                 serializer.save()
@@ -224,32 +209,15 @@ class MyZoneUpdateList(APIView):
         except Zone.DoesNotExist:
             return Response({'error': 'Zone not found'}, status=status.HTTP_404_NOT_FOUND)
 
-=======
-            serializer = MyZoneSerializers(zone, data=request.data, partial=True)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data)
-            return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
-        except Zone.DoesNotExist:
-            return Response({'error': 'Zone not found'}, status=status.HTTP_404_NOT_FOUND)
-
-
-class MyZoneDelete(APIView):
->>>>>>> Stashed changes
     def delete(self, request, id):
         try:
             zone = Zone.objects.get(id=id)
             zone.delete()
-<<<<<<< Updated upstream
             return Response({'message': 'Object deleted'}, status=status.HTTP_204_NO_CONTENT)
-=======
-            return Response(status=status.HTTP_204_NO_CONTENT)
->>>>>>> Stashed changes
         except Zone.DoesNotExist:
             return Response({'error': 'Zone not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
-<<<<<<< Updated upstream
 class MyBranchList(generics.ListCreateAPIView):
     queryset = Branch.objects.all()
     serializer_class = MyBranchSerializer
@@ -286,7 +254,42 @@ class MyBranchGetList(APIView):
             return Response({'error': 'Branch does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
 
-=======
->>>>>>> Stashed changes
+class MyReferenceList(generics.ListCreateAPIView):
+    queryset = Reference.objects.all()
+    serializer_class = MyReferenceSerializers
+
+
+class MyReferenceGetList(APIView):
+    def get(self, request, id):
+        try:
+            reference = Reference.objects.get(id=id)
+            serializer = MyReferenceSerializers(reference)
+            return Response(serializer.data)
+        except Reference.DoesNotExist:
+            return Response({'error': 'Reference does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer_class = MyReferenceSerializers
+
+    def put(self, request, id):
+        try:
+            reference = Reference.objects.get(id=id)
+            serializer = MyReferenceSerializers(reference, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Reference.DoesNotExist:
+            return Response({'error': 'Reference not found'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def delete(self, request, id):
+        try:
+            reference = Reference.objects.get(id=id)
+            reference.delete()
+            return Response({'message': 'Object deleted'}, status=status.HTTP_204_NO_CONTENT)
+        except Reference.DoesNotExist:
+            return Response({'error': 'Response Not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+
 def home(request):
     return render(request, 'user_master/index.html')

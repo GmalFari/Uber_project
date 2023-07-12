@@ -14,8 +14,10 @@ urlpatterns = [
     path('zone/<int:id>/', MyZoneGetList.as_view(), name='Zone-list-id'),
     path('branch/', MyBranchList.as_view(), name='branch_list'),
     path('branch/<int:id>/', MyBranchGetList.as_view(), name='branch-list-id'),
+    path('reference/', MyReferenceList.as_view(), name='reference_list'),
+    path('reference/<int:id>', MyReferenceGetList.as_view(), name='reference-list-id'),
 
     # URL for User
     path('createuser/', createUsermaster.as_view(), name='createuser'),
-    path('login/', Loginuser.as_view(), name='login'),
+    # path('login/', Loginuser.as_view(), name='login'),
 ]
