@@ -14,20 +14,16 @@ import requests
 # Regsitering New user
 class createUsermaster(APIView):
     def post(self, request):
-        data=request.data
-        
+        data = request.data
         
         serializer=UsermasterSerializer(data=data)
         if serializer.is_valid():
            
             serializer.save()
-            msg="User is created"
-            return Response(serializer.data,status=status.HTTP_201_CREATED)
+            msg = "User is created"
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    
-       
-       
 
 
 class MyCountryList(generics.ListCreateAPIView):
@@ -50,10 +46,8 @@ class MyCountryGetList(APIView):
             except Country.DoesNotExist:
                 return Response({'error': 'Country not found'}, status=404)
     except:
-        Response({'msg':'Not Authenticated'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        Response({'msg': 'Not Authenticated'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-
-class MyCountryUpdate(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [BasicAuthentication]
     serializer_class = MyCountrySerializer
@@ -71,8 +65,6 @@ class MyCountryUpdate(APIView):
         except Country.DoesNotExist:
             return Response({'error': 'Country not found'}, status=status.HTTP_404_NOT_FOUND)
 
-
-class MyCountryDelete(APIView):
     def delete(self, request, pk):
         try:
             country = Country.objects.get(pk=pk)
@@ -96,8 +88,6 @@ class MyStateGetList(APIView):
         except State.DoesNotExist:
             return Response({'error': 'State not found'}, status=404)
 
-
-class MyStateUpdate(APIView):
     serializer_class = MyStateSerializer
 
     def put(self, request, pk):
@@ -111,8 +101,6 @@ class MyStateUpdate(APIView):
         except State.DoesNotExist:
             return Response({'error': 'State not found'}, status=status.HTTP_404_NOT_FOUND)
 
-
-class MyStateDelete(APIView):
     def delete(self, request, pk):
         try:
             state = State.objects.get(pk=pk)
@@ -136,8 +124,6 @@ class MyCityGetList(APIView):
         except Location.DoesNotExist:
             return Response({'error': 'City not found'}, status=404)
 
-
-class MyCityUpdate(APIView):
     serializer_class = MyCitySerializer
 
     def put(self, request, pk):
@@ -151,8 +137,6 @@ class MyCityUpdate(APIView):
         except City.DoesNotExist:
             return Response({'error': 'City not found'}, status=status.HTTP_404_NOT_FOUND)
 
-
-class MyCityDelete(APIView):
     def delete(self, request, pk):
         try:
             city = City.objects.get(pk=pk)
@@ -176,8 +160,6 @@ class MyLocationGetList(APIView):
         except Location.DoesNotExist:
             return Response({'error': 'Location not found'}, status=404)
 
-
-class MyLocationUpdate(APIView):
     serializer_class = MyLocationSerializer
 
     def put(self, request, id):
@@ -191,8 +173,6 @@ class MyLocationUpdate(APIView):
         except Location.DoesNotExist:
             return Response({'error': 'Location not found'}, status=status.HTTP_404_NOT_FOUND)
 
-
-class MyLocationDelete(APIView):
     def delete(self, request, id):
         try:
             location = Location.objects.get(id=id)
@@ -200,6 +180,78 @@ class MyLocationDelete(APIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
         except Location.DoesNotExist:
             return Response({'error': 'Location not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class MyZoneList(generics.ListCreateAPIView):
+    queryset = Zone.objects.all()
+    serializer_class = MyZoneSerializer
+
+
+class MyZoneGetList(APIView):
+    def get(self, request, id):
+        try:
+            zone = Zone.objects.get(id=id)
+            serializer = MyZoneSerializer(zone)
+            return Response(serializer.data)
+        except Zone.DoesNotExist:
+            return Response({'error': 'Zone not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer_class = MyZoneSerializer
+
+    def put(self, request, id):
+        try:
+            zone = Zone.objects.get(id=id)
+            serializer = MyZoneSerializer(zone, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Zone.DoesNotExist:
+            return Response({'error': 'Zone not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    def delete(self, request, id):
+        try:
+            zone = Zone.objects.get(id=id)
+            zone.delete()
+            return Response({'message': 'Object deleted'}, status=status.HTTP_204_NO_CONTENT)
+        except Zone.DoesNotExist:
+            return Response({'error': 'Zone not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class MyBranchList(generics.ListCreateAPIView):
+    queryset = Branch.objects.all()
+    serializer_class = MyBranchSerializer
+
+
+class MyBranchGetList(APIView):
+    def get(self, request, id):
+        try:
+            branch = Branch.objects.get(id=id)
+            serializer = MyBranchSerializer(branch)
+            return Response(serializer.data)
+        except Branch.DoesNotExist:
+            return Response({'error': 'Branch does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer_class = MyBranchSerializer
+
+    def put(self, request, id):
+        try:
+            branch = Branch.objects.get(id=id)
+            serializer = MyBranchSerializer(branch, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Branch.DoesNotExist:
+            return Response({'error': 'Branch not found'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def delete(self, request, id):
+        try:
+            branch = Branch.objects.get(id=id)
+            branch.delete()
+            return Response({'message': 'object deleted'}, status=status.HTTP_204_NO_CONTENT)
+        except Branch.DoesNotExist:
+            return Response({'error': 'Branch does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
 
 def home(request):

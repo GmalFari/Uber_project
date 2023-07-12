@@ -30,6 +30,17 @@ class MyLocationSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class MyZoneSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Zone
+        fields = '__all__'
+
+
+class MyBranchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Branch
+        fields = '__all__'
+
 
 class UsermasterSerializer(serializers.ModelSerializer):
     class Meta:

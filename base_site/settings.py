@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -66,7 +67,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "base_site.wsgi.application"
 
-import environ
+
 env = environ.Env()
 # reading .env file
 environ.Env.read_env()

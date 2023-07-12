@@ -4,7 +4,6 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.hashers import make_password
 
 
-
 class Country(models.Model):
     country_code = models.CharField(max_length=5, primary_key=True)
     country_name = models.CharField(max_length=30, unique=True)
