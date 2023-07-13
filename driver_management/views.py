@@ -32,9 +32,7 @@ class MyDriverGetList(APIView):
                 return Response(request.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except AddDriver.DoesNotExist:
-<<<<<<< HEAD
             Response({'msg': 'Search value not present in database'}, status=status.HTTP_417_EXPECTATION_FAILED)
-=======
             return Response({'error': 'Driver not found'}, status=status.HTTP_404_NOT_FOUND)
 
     def delete(self, request, id):
@@ -45,4 +43,3 @@ class MyDriverGetList(APIView):
         except AddDriver.DoesNotExist:
             return Response({'error': 'Driver not found'}, status=status.HTTP_404_NOT_FOUND)
 
->>>>>>> 63d6c795b38b93f337905b8838c640ba86615f9c
