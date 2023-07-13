@@ -123,7 +123,9 @@ class AddDriver(models.Model):
     scheme_type = models.CharField(choices=(("1", "Platinum"), ("2", "Gold"), ("3", "Silver")), max_length=10)
     driver_status = models.CharField(choices=(("1", "Pending"), ("2", "Approved"), ("3", "Rejected"), ("4", "Suspended")),
                                      max_length=10)
-
+    def __str__(self):
+        return self.first_name
+    
 
 class ViewDriver(models.Model):
     pass

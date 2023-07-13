@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "driver_management",
     "client_management",
     "enquiry",
+    "django_filters",
 ]
 
 MIDDLEWARE = [
@@ -141,8 +142,10 @@ REST_FRAMEWORK = {
 }
 
 REST_FRAMEWORK = {
+     
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ]
 }
+
