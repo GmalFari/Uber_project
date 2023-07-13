@@ -17,11 +17,19 @@ class createUsermaster(APIView):
         data = request.data
         
         serializer=UsermasterSerializer(data=data)
+<<<<<<< HEAD
+        
+        if serializer.is_valid():           
+            obj=serializer.save()
+            msg="User is created"
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+=======
         if serializer.is_valid():
            
             serializer.save()
             msg = "User is created"
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+>>>>>>> 0c6d245d48280c7a75c8ddc19f729e5433089a2e
         else:
             return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
