@@ -4,7 +4,6 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import BasicAuthentication
 from rest_framework.response import Response
-from django.contrib.auth import login
 
 from rest_framework import status
 from .models import *
@@ -12,30 +11,27 @@ from .serializers import *
 import requests
 
 
-# Regsitering New user
+# Registering New user
 class createUsermaster(APIView):
     def post(self, request):
-        data=request.data
+        data = request.data
+        
         serializer=UsermasterSerializer(data=data)
+<<<<<<< HEAD
         
         if serializer.is_valid():           
             obj=serializer.save()
             msg="User is created"
             return Response(serializer.data,status=status.HTTP_201_CREATED)
+=======
+        if serializer.is_valid():
+           
+            serializer.save()
+            msg = "User is created"
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+>>>>>>> 0c6d245d48280c7a75c8ddc19f729e5433089a2e
         else:
             return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    
-       
-       
-class Loginuser(APIView):
-    def post(self, request):
-        user_name=request.data['user_name']
-        password=request.data['password']
-        if UserMaster.objects.filter(user_name=user_name, password=password).exists():
-            return Response({'User is login':user_name}, status=status.HTTP_200_OK)
-        else:
-            return Response({'msg': 'unable to login'})
-        
 
 
 class MyCountryList(generics.ListCreateAPIView):
@@ -58,10 +54,8 @@ class MyCountryGetList(APIView):
             except Country.DoesNotExist:
                 return Response({'error': 'Country not found'}, status=404)
     except:
-        Response({'msg':'Not Authenticated'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        Response({'msg': 'Not Authenticated'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-
-class MyCountryUpdate(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [BasicAuthentication]
     serializer_class = MyCountrySerializer
@@ -79,8 +73,6 @@ class MyCountryUpdate(APIView):
         except Country.DoesNotExist:
             return Response({'error': 'Country not found'}, status=status.HTTP_404_NOT_FOUND)
 
-
-class MyCountryDelete(APIView):
     def delete(self, request, pk):
         try:
             country = Country.objects.get(pk=pk)
@@ -104,8 +96,6 @@ class MyStateGetList(APIView):
         except State.DoesNotExist:
             return Response({'error': 'State not found'}, status=404)
 
-
-class MyStateUpdate(APIView):
     serializer_class = MyStateSerializer
 
     def put(self, request, pk):
@@ -119,8 +109,6 @@ class MyStateUpdate(APIView):
         except State.DoesNotExist:
             return Response({'error': 'State not found'}, status=status.HTTP_404_NOT_FOUND)
 
-
-class MyStateDelete(APIView):
     def delete(self, request, pk):
         try:
             state = State.objects.get(pk=pk)
@@ -144,8 +132,6 @@ class MyCityGetList(APIView):
         except Location.DoesNotExist:
             return Response({'error': 'City not found'}, status=404)
 
-
-class MyCityUpdate(APIView):
     serializer_class = MyCitySerializer
 
     def put(self, request, pk):
@@ -159,8 +145,6 @@ class MyCityUpdate(APIView):
         except City.DoesNotExist:
             return Response({'error': 'City not found'}, status=status.HTTP_404_NOT_FOUND)
 
-
-class MyCityDelete(APIView):
     def delete(self, request, pk):
         try:
             city = City.objects.get(pk=pk)
@@ -182,10 +166,8 @@ class MyLocationGetList(APIView):
             serializer = MyLocationSerializer(location)
             return Response(serializer.data)
         except Location.DoesNotExist:
-            return Response({'error': 'Location not found'}, status=404)
+            return Response({'error': 'Location not found'}, status=status.HTTP_404_NOT_FOUND)
 
-
-class MyLocationUpdate(APIView):
     serializer_class = MyLocationSerializer
 
     def put(self, request, id):
@@ -199,8 +181,6 @@ class MyLocationUpdate(APIView):
         except Location.DoesNotExist:
             return Response({'error': 'Location not found'}, status=status.HTTP_404_NOT_FOUND)
 
-
-class MyLocationDelete(APIView):
     def delete(self, request, id):
         try:
             location = Location.objects.get(id=id)
@@ -208,6 +188,258 @@ class MyLocationDelete(APIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
         except Location.DoesNotExist:
             return Response({'error': 'Location not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class MyZoneList(generics.ListCreateAPIView):
+    queryset = Zone.objects.all()
+    serializer_class = MyZoneSerializer
+
+
+class MyZoneGetList(APIView):
+    def get(self, request, id):
+        try:
+            zone = Zone.objects.get(id=id)
+            serializer = MyZoneSerializer(zone)
+            return Response(serializer.data)
+        except Zone.DoesNotExist:
+            return Response({'error': 'Zone not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer_class = MyZoneSerializer
+
+    def put(self, request, id):
+        try:
+            zone = Zone.objects.get(id=id)
+            serializer = MyZoneSerializer(zone, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Zone.DoesNotExist:
+            return Response({'error': 'Zone not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    def delete(self, request, id):
+        try:
+            zone = Zone.objects.get(id=id)
+            zone.delete()
+            return Response({'message': 'Object deleted'}, status=status.HTTP_204_NO_CONTENT)
+        except Zone.DoesNotExist:
+            return Response({'error': 'Zone not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class MyBranchList(generics.ListCreateAPIView):
+    queryset = Branch.objects.all()
+    serializer_class = MyBranchSerializer
+
+
+class MyBranchGetList(APIView):
+    def get(self, request, id):
+        try:
+            branch = Branch.objects.get(id=id)
+            serializer = MyBranchSerializer(branch)
+            return Response(serializer.data)
+        except Branch.DoesNotExist:
+            return Response({'error': 'Branch does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer_class = MyBranchSerializer
+
+    def put(self, request, id):
+        try:
+            branch = Branch.objects.get(id=id)
+            serializer = MyBranchSerializer(branch, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Branch.DoesNotExist:
+            return Response({'error': 'Branch not found'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def delete(self, request, id):
+        try:
+            branch = Branch.objects.get(id=id)
+            branch.delete()
+            return Response({'message': 'object deleted'}, status=status.HTTP_204_NO_CONTENT)
+        except Branch.DoesNotExist:
+            return Response({'error': 'Branch does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class MyReferenceList(generics.ListCreateAPIView):
+    queryset = Reference.objects.all()
+    serializer_class = MyReferenceSerializers
+
+
+class MyReferenceGetList(APIView):
+    def get(self, request, id):
+        try:
+            reference = Reference.objects.get(id=id)
+            serializer = MyReferenceSerializers(reference)
+            return Response(serializer.data)
+        except Reference.DoesNotExist:
+            return Response({'error': 'Reference does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer_class = MyReferenceSerializers
+
+    def put(self, request, id):
+        try:
+            reference = Reference.objects.get(id=id)
+            serializer = MyReferenceSerializers(reference, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Reference.DoesNotExist:
+            return Response({'error': 'Reference not found'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def delete(self, request, id):
+        try:
+            reference = Reference.objects.get(id=id)
+            reference.delete()
+            return Response({'message': 'Object deleted'}, status=status.HTTP_204_NO_CONTENT)
+        except Reference.DoesNotExist:
+            return Response({'error': 'Response Not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class MyTaxList(generics.ListCreateAPIView):
+    queryset = Tax.objects.all()
+    serializer_class = MyTaxSerializers
+
+
+class MyTaxGetList(APIView):
+    def get(self, request, id):
+        try:
+            tax = Tax.objects.get(id=id)
+            serializer = MyTaxSerializers(tax)
+            return Response(serializer.data)
+        except Tax.DoesNotExist:
+            return Response({'error': 'Tax not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer_class = MyTaxSerializers
+
+    def put(self, request, id):
+        try:
+            tax = Tax.objects.get(id=id)
+            serializer = MyTaxSerializers(tax, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Tax.DoesNotExist:
+            return Response({'error': 'Tax not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    def delete(self, request, id):
+        try:
+            tax = Tax.objects.get(id=id)
+            tax.delete()
+            return Response({'message': 'Object deleted'}, status=status.HTTP_204_NO_CONTENT)
+        except Tax.DoesNotExist:
+            return Response({'error': 'Tax not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class MyCarList(generics.ListCreateAPIView):
+    queryset = Car.objects.all()
+    serializer_class = MyCarSerializers
+
+
+class MyCarGetList(APIView):
+    def get(self, request, id):
+        try:
+            car = Car.objects.get(id=id)
+            serializer = MyCarSerializers(car)
+            return Response(serializer.data)
+        except Car.DoesNotExist:
+            return Response({'error': 'Car not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer_class = MyCarSerializers
+
+    def put(self, request, id):
+        try:
+            car = Car.objects.get(id=id)
+            serializer = MyCarSerializers(car, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Car.DoesNotExist:
+            return Response({'error': 'Car not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    def delete(self, request, id):
+        try:
+            car = Car.objects.get(id=id)
+            car.delete()
+            return Response({'message': 'Object deleted'}, status=status.HTTP_204_NO_CONTENT)
+        except Car.DoesNotExist:
+            return Response({'error': 'Car not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class MyCouponList(generics.ListCreateAPIView):
+    queryset = CouponList.objects.all()
+    serializer_class = MyCouponSerializers
+
+
+class MyCouponGetList(APIView):
+    def get(self, request, id):
+        try:
+            coupon = CouponList.objects.get(id=id)
+            serializer = MyCouponSerializers(coupon)
+            return Response(serializer.data)
+        except CouponList.DoesNotExist:
+            return Response({'error': 'Coupon not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer_class = MyCouponSerializers
+
+    def put(self, request, id):
+        try:
+            coupon = CouponList.objects.get(id=id)
+            serializer = MyCouponSerializers(coupon, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except CouponList.DoesNotExist:
+            return Response({'error': 'Coupon not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    def delete(self, request, id):
+        try:
+            coupon = CouponList.objects.get(id=id)
+            coupon.delete()
+            return Response({'message': 'Object deleted'}, status=status.HTTP_204_NO_CONTENT)
+        except CouponList.DoesNotExist:
+            return Response({'error': 'Coupon not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class MySubscriptionList(generics.ListCreateAPIView):
+    queryset = Subscription.objects.all()
+    serializer_class = MySubscriptionSerializers
+
+
+class MySubscriptionGetList(APIView):
+    def get(self, request, id):
+        try:
+            subscription = Subscription.objects.get(id=id)
+            serializer = MySubscriptionSerializers(subscription)
+            return Response(serializer.data)
+        except Subscription.DoesNotExist:
+            return Response({'error': 'Subscription not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer_class = MySubscriptionSerializers
+
+    def put(self, request, id):
+        try:
+            subscription = Subscription.objects.get(id=id)
+            serializer = MySubscriptionSerializers(subscription, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except CouponList.DoesNotExist:
+            return Response({'error': 'Subscription not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    def delete(self, request, id):
+        try:
+            subscription = Subscription.objects.get(id=id)
+            subscription.delete()
+            return Response({'message': 'Object deleted'}, status=status.HTTP_204_NO_CONTENT)
+        except Subscription.DoesNotExist:
+            return Response({'error': 'Subscription not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
 def home(request):

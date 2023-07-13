@@ -4,7 +4,6 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.hashers import make_password
 
 
-
 class Country(models.Model):
     country_code = models.CharField(max_length=5, primary_key=True)
     country_name = models.CharField(max_length=30, unique=True)
@@ -110,7 +109,7 @@ class UserMaster(models.Model):
     mobile = models.CharField(max_length=20, null=True, blank=True)
     email_id = models.EmailField(max_length=50, null=True, blank=True)
     branch = models.ForeignKey(Branch, to_field='branch_name', on_delete=models.CASCADE)
-    role = models.ForeignKey(Group, on_delete=models.CASCADE)
+    # role = models.ForeignKey(Group, on_delete=models.CASCADE)
     role=models.CharField(choices=user_role, null=True, blank=True)
     status = models.BooleanField(default=True)
 
