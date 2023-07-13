@@ -17,8 +17,9 @@ class createUsermaster(APIView):
     def post(self, request):
         data=request.data
         serializer=UsermasterSerializer(data=data)
+        
         if serializer.is_valid():           
-            serializer.save()
+            obj=serializer.save()
             msg="User is created"
             return Response(serializer.data,status=status.HTTP_201_CREATED)
         else:

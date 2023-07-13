@@ -117,9 +117,14 @@ class UserMaster(models.Model):
     class Meta:
         # verbose_name = "User Master"
         verbose_name_plural = "User Master"
+        permissions = (
+           ("view_UserMaster", "Can view the UserMaster"),
+           ("can_publish_UserMaster", "Can publish a UserMaster"),
+     )
     
     def save(self, *args, **kwargs):
         self.password = make_password(self.password)
+        
         super(UserMaster, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -185,7 +190,7 @@ class Car(models.Model):
         verbose_name_plural = "Car"
 
     def __str__(self):
-        return self.car_company
+        return self.car_company 
 
 
 booking_type_list = (
@@ -209,7 +214,7 @@ class CouponList(models.Model):
     class Meta:
         # verbose_name = ("Coupon List")
         verbose_name_plural = "Coupon List"
-
+        
     def __str__(self):
         return self.coupon_name
 
