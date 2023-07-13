@@ -4,15 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="02d811cf-bb41-4d2d-a090-90e6cc2ad56b" name="Changes" comment="tax and car api">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user_master/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/user_master/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user_master/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/user_master/views.py" afterDir="false" />
-    </list>
+    <list default="true" id="02d811cf-bb41-4d2d-a090-90e6cc2ad56b" name="Changes" comment="driver management work" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -55,7 +58,28 @@
       <option name="project" value="LOCAL" />
       <updated>1689236221923</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="remaining master api">
+      <created>1689245048522</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1689245048522</updated>
+    </task>
+    <task id="LOCAL-00004" summary="driver management work">
+      <created>1689251764163</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1689251764163</updated>
+    </task>
+    <task id="LOCAL-00005" summary="driver management work">
+      <created>1689251793742</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1689251793742</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -72,6 +96,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="reference api" />
     <MESSAGE value="tax and car api" />
-    <option name="LAST_COMMIT_MESSAGE" value="tax and car api" />
+    <MESSAGE value="remaining master api" />
+    <MESSAGE value="driver management work" />
+    <option name="LAST_COMMIT_MESSAGE" value="driver management work" />
   </component>
 </project>
