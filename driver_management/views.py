@@ -39,4 +39,4 @@ class Driversearch(ListAPIView):
             
 
         except AddDriver.DoesNotExist:
-            pass
+            Response({'msg': 'Search value not present in database'}, status=status.HTTP_417_EXPECTATION_FAILED)
