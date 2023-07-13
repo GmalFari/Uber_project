@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="02d811cf-bb41-4d2d-a090-90e6cc2ad56b" name="Changes" comment="remaining master api">
-      <change afterPath="$PROJECT_DIR$/driver_management/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base_site/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/base_site/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/driver_management/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/driver_management/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/driver_management/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/driver_management/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/driver_management/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/driver_management/views.py" afterDir="false" />
-    </list>
+    <list default="true" id="02d811cf-bb41-4d2d-a090-90e6cc2ad56b" name="Changes" comment="driver management work" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -72,7 +65,21 @@
       <option name="project" value="LOCAL" />
       <updated>1689245048522</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="driver management work">
+      <created>1689251764163</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1689251764163</updated>
+    </task>
+    <task id="LOCAL-00005" summary="driver management work">
+      <created>1689251793742</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1689251793742</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -90,6 +97,7 @@
     <MESSAGE value="reference api" />
     <MESSAGE value="tax and car api" />
     <MESSAGE value="remaining master api" />
-    <option name="LAST_COMMIT_MESSAGE" value="remaining master api" />
+    <MESSAGE value="driver management work" />
+    <option name="LAST_COMMIT_MESSAGE" value="driver management work" />
   </component>
 </project>
