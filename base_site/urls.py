@@ -17,7 +17,7 @@ urlpatterns = [
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/', include('user_master.urls')),
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='api-docs'),
-    path('api/driver/', include('driver_management.urls')),
+    path('driver/', include('driver_management.urls')),
     path('api/enquiry/', MyEnquiryList.as_view(), name='enquiry-list'),
     path('api/enquiry/<int:id>', MyEnquiryGetList.as_view(), name='enquiry-list-id'),
     path('api/enquiry/<int:id>/update', MyEnquiryUpdate.as_view(), name='enquiry-update-list'),
