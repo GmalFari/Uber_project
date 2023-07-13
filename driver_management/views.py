@@ -1,21 +1,44 @@
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import AddDriver
-from .serializers import MyModelSerializer
+from .models import *
+from .serializers import *
+from rest_framework import status
 
 
-class MyModelList(generics.ListCreateAPIView):
+class MyDriverList(generics.ListCreateAPIView):
     queryset = AddDriver.objects.all()
-    serializer_class = MyModelSerializer
+    serializer_class = MyDriverSerializer
     # lookup_field = 'id'
 
 
-class DriverDetailsView(APIView):
+class MyDriverGetList(APIView):
     def get(self, request, id):
         try:
             driver = AddDriver.objects.get(id=id)
-            serializer = MyModelSerializer(driver, many=True)
+            serializer = MyDriverSerializer(driver)
             return Response(serializer.data)
         except AddDriver.DoesNotExist:
-            return Response({'error': 'Driver not found'}, status=404)
+            return Response({'error': 'Driver not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer_class = MyDriverSerializer
+
+    def put(self, request, id):
+        try:
+            driver = AddDriver.objects.get(id=id)
+            serializer = MyDriverSerializer(driver, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(request.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except AddDriver.DoesNotExist:
+            return Response({'error': 'Driver not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    def delete(self, request, id):
+        try:
+            driver = AddDriver.objects.get(id=id)
+            driver.delete()
+            return Response({'message': 'Object Deleted'}, status=status.HTTP_204_NO_CONTENT)
+        except AddDriver.DoesNotExist:
+            return Response({'error': 'Driver not found'}, status=status.HTTP_404_NOT_FOUND)
+

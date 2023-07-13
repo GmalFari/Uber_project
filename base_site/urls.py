@@ -3,7 +3,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework_swagger.views import get_swagger_view
-from driver_management.views import MyModelList, DriverDetailsView
+# from driver_management.views import MyModelList, DriverDetailsView
 from enquiry.views import MyEnquiryList, MyEnquiryDelete, MyEnquiryUpdate, MyEnquiryGetList
 from booking.views import MyBookingList
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
@@ -17,8 +17,7 @@ urlpatterns = [
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/', include('user_master.urls')),
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='api-docs'),
-    path('api/driver/', MyModelList.as_view(), name='driver-list'),
-    path('api/driver/<int:id>', DriverDetailsView.as_view()),
+    path('api/driver/', include('driver_management.urls')),
     path('api/enquiry/', MyEnquiryList.as_view(), name='enquiry-list'),
     path('api/enquiry/<int:id>', MyEnquiryGetList.as_view(), name='enquiry-list-id'),
     path('api/enquiry/<int:id>/update', MyEnquiryUpdate.as_view(), name='enquiry-update-list'),
