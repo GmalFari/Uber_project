@@ -362,5 +362,77 @@ class MyCarGetList(APIView):
             return Response({'error': 'Car not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
+class MyCouponList(generics.ListCreateAPIView):
+    queryset = CouponList.objects.all()
+    serializer_class = MyCouponSerializers
+
+
+class MyCouponGetList(APIView):
+    def get(self, request, id):
+        try:
+            coupon = CouponList.objects.get(id=id)
+            serializer = MyCouponSerializers(coupon)
+            return Response(serializer.data)
+        except CouponList.DoesNotExist:
+            return Response({'error': 'Coupon not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer_class = MyCouponSerializers
+
+    def put(self, request, id):
+        try:
+            coupon = CouponList.objects.get(id=id)
+            serializer = MyCouponSerializers(coupon, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except CouponList.DoesNotExist:
+            return Response({'error': 'Coupon not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    def delete(self, request, id):
+        try:
+            coupon = CouponList.objects.get(id=id)
+            coupon.delete()
+            return Response({'message': 'Object deleted'}, status=status.HTTP_204_NO_CONTENT)
+        except CouponList.DoesNotExist:
+            return Response({'error': 'Coupon not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class MySubscriptionList(generics.ListCreateAPIView):
+    queryset = Subscription.objects.all()
+    serializer_class = MySubscriptionSerializers
+
+
+class MySubscriptionGetList(APIView):
+    def get(self, request, id):
+        try:
+            subscription = Subscription.objects.get(id=id)
+            serializer = MySubscriptionSerializers(subscription)
+            return Response(serializer.data)
+        except Subscription.DoesNotExist:
+            return Response({'error': 'Subscription not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer_class = MySubscriptionSerializers
+
+    def put(self, request, id):
+        try:
+            subscription = Subscription.objects.get(id=id)
+            serializer = MySubscriptionSerializers(subscription, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except CouponList.DoesNotExist:
+            return Response({'error': 'Subscription not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    def delete(self, request, id):
+        try:
+            subscription = Subscription.objects.get(id=id)
+            subscription.delete()
+            return Response({'message': 'Object deleted'}, status=status.HTTP_204_NO_CONTENT)
+        except Subscription.DoesNotExist:
+            return Response({'error': 'Subscription not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
 def home(request):
     return render(request, 'user_master/index.html')

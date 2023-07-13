@@ -17,7 +17,13 @@ urlpatterns = [
     path('reference/', MyReferenceList.as_view(), name='reference_list'),
     path('reference/<int:id>', MyReferenceGetList.as_view(), name='reference-list-id'),
     path('tax/', MyTaxList.as_view(), name='tax_list'),
-    path('tax/<int:id>/', MyTaxGetList.as_view(), name='tax_list-id'),
+    path('tax/<int:id>/', MyTaxGetList.as_view(), name='tax-list-id'),
+    path('car/', MyCarList.as_view(), name='car_list'),
+    path('car/<int:id>/', MyCarGetList.as_view(), name='car-list-id'),
+    path('coupon/', MyCouponList.as_view(), name='coupon_list'),
+    path('coupon/<int:id>/', MyCouponGetList.as_view(), name='coupon-list-id'),
+    path('subscription/', MySubscriptionList.as_view(), name='subscription_list'),
+    path('subscription/<int:id>/', MySubscriptionGetList.as_view(), name='subscription-list-id'),
 
     # URL for User
     path('createuser/', createUsermaster.as_view(), name='createuser'),
