@@ -16,6 +16,8 @@ urlpatterns = [
     path('branch/<int:id>/', MyBranchGetList.as_view(), name='branch-list-id'),
     path('reference/', MyReferenceList.as_view(), name='reference_list'),
     path('reference/<int:id>', MyReferenceGetList.as_view(), name='reference-list-id'),
+    path('tax/', MyTaxList.as_view(), name='tax_list'),
+    path('tax/<int:id>/', MyTaxGetList.as_view(), name='tax_list-id'),
 
     # URL for User
     path('createuser/', createUsermaster.as_view(), name='createuser'),

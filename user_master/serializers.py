@@ -48,6 +48,30 @@ class MyReferenceSerializers(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class MyTaxSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Tax
+        fields = '__all__'
+
+
+class MyCarSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Car
+        fields = '__all__'
+
+
+class MyCouponSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = CouponList
+        fields = '__all__'
+
+
+class MySubscriptionSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Subscription
+        fields = '__all__'
+
+
 class UsermasterSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserMaster

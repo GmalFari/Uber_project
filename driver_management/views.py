@@ -8,7 +8,7 @@ from .serializers import MyModelSerializer
 class MyModelList(generics.ListCreateAPIView):
     queryset = AddDriver.objects.all()
     serializer_class = MyModelSerializer
-    lookup_field = 'id'
+    # lookup_field = 'id'
 
 
 class DriverDetailsView(APIView):

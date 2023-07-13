@@ -290,6 +290,77 @@ class MyReferenceGetList(APIView):
             return Response({'error': 'Response Not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
+class MyTaxList(generics.ListCreateAPIView):
+    queryset = Tax.objects.all()
+    serializer_class = MyTaxSerializers
+
+
+class MyTaxGetList(APIView):
+    def get(self, request, id):
+        try:
+            tax = Tax.objects.get(id=id)
+            serializer = MyTaxSerializers(tax)
+            return Response(serializer.data)
+        except Tax.DoesNotExist:
+            return Response({'error': 'Tax not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer_class = MyTaxSerializers
+
+    def put(self, request, id):
+        try:
+            tax = Tax.objects.get(id=id)
+            serializer = MyTaxSerializers(tax, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Tax.DoesNotExist:
+            return Response({'error': 'Tax not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    def delete(self, request, id):
+        try:
+            tax = Tax.objects.get(id=id)
+            tax.delete()
+            return Response({'message': 'Object deleted'}, status=status.HTTP_204_NO_CONTENT)
+        except Tax.DoesNotExist:
+            return Response({'error': 'Tax not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class MyCarList(generics.ListCreateAPIView):
+    queryset = Car.objects.all()
+    serializer_class = MyCarSerializers
+
+
+class MyCarGetList(APIView):
+    def get(self, request, id):
+        try:
+            car = Car.objects.get(id=id)
+            serializer = MyCarSerializers(car)
+            return Response(serializer.data)
+        except Car.DoesNotExist:
+            return Response({'error': 'Car not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer_class = MyCarSerializers
+
+    def put(self, request, id):
+        try:
+            car = Car.objects.get(id=id)
+            serializer = MyCarSerializers(car, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Car.DoesNotExist:
+            return Response({'error': 'Car not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    def delete(self, request, id):
+        try:
+            car = Car.objects.get(id=id)
+            car.delete()
+            return Response({'message': 'Object deleted'}, status=status.HTTP_204_NO_CONTENT)
+        except Car.DoesNotExist:
+            return Response({'error': 'Car not found'}, status=status.HTTP_404_NOT_FOUND)
+
 
 def home(request):
     return render(request, 'user_master/index.html')
