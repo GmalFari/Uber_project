@@ -1,9 +1,12 @@
 from rest_framework import generics
+from rest_framework.generics import ListAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import *
 from .serializers import *
 from rest_framework import status
+from rest_framework import filters
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class MyDriverList(generics.ListCreateAPIView):
@@ -32,9 +35,7 @@ class MyDriverGetList(APIView):
                 return Response(request.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except AddDriver.DoesNotExist:
-<<<<<<< HEAD
             Response({'msg': 'Search value not present in database'}, status=status.HTTP_417_EXPECTATION_FAILED)
-=======
             return Response({'error': 'Driver not found'}, status=status.HTTP_404_NOT_FOUND)
 
     def delete(self, request, id):
@@ -45,4 +46,27 @@ class MyDriverGetList(APIView):
         except AddDriver.DoesNotExist:
             return Response({'error': 'Driver not found'}, status=status.HTTP_404_NOT_FOUND)
 
->>>>>>> 63d6c795b38b93f337905b8838c640ba86615f9c
+
+class Driversearch(ListAPIView):
+    try:
+        queryset = AddDriver.objects.all()
+        serializer_class = MyDriverSerializer
+        #
+        filter_backends = [DjangoFilterBackend]
+
+        filterset_fields = ['driver_type', 'first_name', 'driver_status']
+    except AddDriver.DoesNotExist:
+        pass
+
+
+
+
+
+
+
+
+
+
+
+
+
