@@ -140,7 +140,13 @@ class ReferDriver(models.Model):
 
 
 class DriverLeave(models.Model):
-    pass
+    driver_name = models.ForeignKey(AddDriver, on_delete=models.CASCADE)
+    reason_type = models.TextField()
+
+
+    def __str__(self):
+        return self.driver_name
+
 
 
 class DriverBalance(models.Model):
