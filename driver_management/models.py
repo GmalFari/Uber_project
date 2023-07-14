@@ -139,16 +139,20 @@ class ReferDriver(models.Model):
     pass
 
 
-class DriverLeave(models.Model):
-    driver_name = models.ForeignKey(AddDriver, on_delete=models.CASCADE)
-    reason_type = models.TextField()
 
+class Driverleave(models.Model):
+    drivername=models.ForeignKey(AddDriver, on_delete=models.CASCADE)
+    reason=models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
-        return self.driver_name
+        return self.reason
 
 
 
 class DriverBalance(models.Model):
-    pass
+    pay=models.PositiveBigIntegerField()
+    drivername=models.ForeignKey(AddDriver, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.drivername.address
 
