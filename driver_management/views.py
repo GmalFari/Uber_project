@@ -7,6 +7,9 @@ from .serializers import *
 from rest_framework import status
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
+from dateutil.relativedelta import relativedelta
+
+from datetime import date, datetime
 
 
 class MyDriverList(generics.ListCreateAPIView):
@@ -60,8 +63,25 @@ class Driversearch(ListAPIView):
 
 
 
+# Driver Leave API
 
-
+class Driverleaveapi(APIView):
+    def post(self, request):
+        data=request.data
+        total_days_of_leave=request.data.get('total_days_of_leave')
+        leave_from_date=request.data.get('leave_from_date')
+        leave_to_date=request.data.get('leave_to_date')
+        fromdate=datetime.strptime(leave_from_date, "%Y-%m-%d").date()
+        todate=datetime.strptime(leave_to_date, "%Y-%m-%d").date()
+        total_days=relativedelta(todate, fromdate) 
+        
+        print(f'total days of leave is:{total_days.days}')
+        serializer=DriverleaveSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'msg':'Driver Leave save'}, status=status.HTTP_201_CREATED)
+        else:
+            return Response({'msg':'may be you missed some field'}, status=status.HTTP_400_BAD_REQUEST) 
 
 
 

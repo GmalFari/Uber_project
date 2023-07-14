@@ -1,5 +1,6 @@
 from django.db import models
 import datetime
+from datetime import timedelta,date
 from user_master.models import State, City, Location, Branch, Zone
 from django.utils.html import mark_safe
 
@@ -143,6 +144,19 @@ class ReferDriver(models.Model):
 class Driverleave(models.Model):
     drivername=models.ForeignKey(AddDriver, on_delete=models.CASCADE)
     reason=models.CharField(max_length=100, null=True, blank=True)
+    leave_from_date=models.DateField(auto_now_add=False, null=True, blank=True)
+    leave_to_date=models.DateField(auto_now_add=False, null=True, blank=True)
+    total_days_of_leave= models.BigIntegerField()
+
+
+
+    # def save(self, *args, **kwargs):
+    #     leave_from_date=date(self.leave_from_date)
+    #     leave_to_date=date(self.leave_to_date)
+    #     total_days_leave=(leave_to_date - leave_from_date)
+    #     print(f'your total days of leave:{total_days_leave}')
+        
+    #     super(Driverleave, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.reason
