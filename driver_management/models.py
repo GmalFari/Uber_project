@@ -144,21 +144,11 @@ class ReferDriver(models.Model):
 class Driverleave(models.Model):
     drivername=models.ForeignKey(AddDriver, on_delete=models.CASCADE)
     reason=models.CharField(max_length=100, null=True, blank=True)
-    leave_from_date=models.DateField(auto_now_add=False, null=True, blank=True)
-    leave_to_date=models.DateField(auto_now_add=False, null=True, blank=True)
-    total_days_of_leave= models.BigIntegerField()
+    leave_from_date=models.DateField()
 
+    leave_to_date=models.DateField()
+    total_days_of_leave= models.IntegerField()
 
-
-    def save(self, *args, **kwargs):
-        leave_from_date=date(self.leave_from_date)
-        leave_to_date=date(self.leave_to_date)
-        total_days_leave=(leave_to_date - leave_from_date)
-        total_days_leave=self.total_days_of_leave
-
-        print(f'your total days of leave:{total_days_leave.days}')
-        
-        super(Driverleave, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.reason

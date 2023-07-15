@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "client_management",
     "enquiry",
     "django_filters",
+   
 ]
 
 MIDDLEWARE = [

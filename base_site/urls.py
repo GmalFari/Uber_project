@@ -16,13 +16,16 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/', include('user_master.urls')),
+    path('api/booking/', include('booking.urls')),
+
+
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='api-docs'),
     path('driver/', include('driver_management.urls')),
     path('api/enquiry/', MyEnquiryList.as_view(), name='enquiry-list'),
     path('api/enquiry/<int:id>', MyEnquiryGetList.as_view(), name='enquiry-list-id'),
     path('api/enquiry/<int:id>/update', MyEnquiryUpdate.as_view(), name='enquiry-update-list'),
     path('api/enquiry/<int:id>/delete', MyEnquiryDelete.as_view(), name='enquiry-delete-list'),
-    path('api/booking/', MyBookingList.as_view(), name='booking-list')
+    
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

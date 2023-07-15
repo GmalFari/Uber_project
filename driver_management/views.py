@@ -69,20 +69,10 @@ class Driversearch(ListAPIView):
 class Driverleaveapi(APIView):
     def post(self, request):
         data=request.data
-        total_days_of_leave=request.data.get('total_days_of_leave')
-        leave_from_date=request.data.get('leave_from_date')
-        leave_to_date=request.data.get('leave_to_date')
-      
-        total_days=leavecalcu.get_difference(leave_to_date,leave_from_date)
-        
-        print(f'total days of leave is:{total_days.days}')
-
-        # leave={}
-        # leave[total_days_of_leave]=data[total_days]
         serializer=DriverleaveSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data,{'msg':'Driver Leave save'}, status=status.HTTP_201_CREATED)
+            return Response({'msg':'Driver Leave save'}, status=status.HTTP_201_CREATED)
         else:
             return Response({'msg':'may be you missed some field'}, status=status.HTTP_400_BAD_REQUEST) 
 
