@@ -123,6 +123,7 @@ class AddDriver(models.Model):
     scheme_type = models.CharField(choices=(("1", "Platinum"), ("2", "Gold"), ("3", "Silver")), max_length=10)
     driver_status = models.CharField(choices=(("1", "Pending"), ("2", "Approved"), ("3", "Rejected"), ("4", "Suspended")),
                                      max_length=10)
+
     def __str__(self):
         return self.first_name
     
@@ -139,20 +140,10 @@ class ReferDriver(models.Model):
     pass
 
 
-
-class Driverleave(models.Model):
-    drivername=models.ForeignKey(AddDriver, on_delete=models.CASCADE)
-    reason=models.CharField(max_length=100, null=True, blank=True)
-
-    def __str__(self):
-        return self.reason
-
+class DriverLeave(models.Model):
+    pass
 
 
 class DriverBalance(models.Model):
-    pay=models.PositiveBigIntegerField()
-    drivername=models.ForeignKey(AddDriver, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.drivername.address
+    pass
 
