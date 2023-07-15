@@ -1,6 +1,5 @@
 from django.db import models
-import datetime
-from datetime import timedelta,date
+from datetime import date
 from user_master.models import State, City, Location, Branch, Zone
 from django.utils.html import mark_safe
 
@@ -124,6 +123,7 @@ class AddDriver(models.Model):
     scheme_type = models.CharField(choices=(("1", "Platinum"), ("2", "Gold"), ("3", "Silver")), max_length=10)
     driver_status = models.CharField(choices=(("1", "Pending"), ("2", "Approved"), ("3", "Rejected"), ("4", "Suspended")),
                                      max_length=10)
+
     def __str__(self):
         return self.first_name
     
@@ -166,9 +166,5 @@ class Driverleave(models.Model):
 
 
 class DriverBalance(models.Model):
-    pay=models.PositiveBigIntegerField()
-    drivername=models.ForeignKey(AddDriver, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.drivername.address
+    pass
 

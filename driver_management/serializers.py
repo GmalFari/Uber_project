@@ -8,7 +8,14 @@ class MyDriverSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+
+    
 class DriverleaveSerializer(serializers.ModelSerializer):
     class Meta:
         model=Driverleave
         fields='__all__'
+
+
+
+
+
