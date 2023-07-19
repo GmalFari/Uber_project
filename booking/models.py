@@ -1,6 +1,6 @@
 from django.db import models
 from client_management.models import AddClient
-
+from driver_management.models import AddDriver
 
 
 
@@ -23,9 +23,9 @@ class PlaceBooking(models.Model):
     to_date = models.DateField()
     car_type=models.CharField(max_length=100, null=True)
     gear_type= models.CharField(max_length=100, null=True)
-    pickup_location=models.CharField(max_length=100, null=True)
-    drop_location=models.CharField(max_length=100, null=True)
-
+    # pickup_location=models.CharField(max_length=100, null=True)
+    # drop_location=models.CharField(max_length=100, null=True)
+    driver=models.ForeignKey(AddDriver, on_delete=models.CASCADE)
     def __str__(self):
         return self.client_name.full_name
 
