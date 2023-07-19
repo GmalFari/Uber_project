@@ -17,21 +17,39 @@ class userregistration(APIView):
         serializer=ClientregistrationSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
+            print(f'User Registration is done: {serializer.data}')
             return Response({'msg': 'user is created'}, status=status.HTTP_201_CREATED)
         
         else:
-             return Response({'msg': 'user is created'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+             return Response({'msg': 'user not created'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
 
 class MyBookingList(APIView):
     def post(self, request):
         data=request.data
-        location = Nominatim(user_agent="booking")
-        currunt_loaction=request.data.get('currunt_loaction')
-        getLocation=location.geocode(currunt_loaction)
-        print(getLocation)
-        request.POST._mutable = True
-        data['currunt_loaction']= str(getLocation)
+        
+        driver_type=request.data.get('driver_type')
+
+        driver_rating=request.data.get('driver_rating')
+
+        car_type=request.data.get('car_type')
+
+        transmission_type=request.data.get('transmission_type')
+
+        driver=AddDriver.objects.all()
+
+        if driver_type:
+            driver=driver.filter(driver_type=driver_type)
+        
+        if driver_rating:
+            driver=driver.filter(driver_rating=driver_rating)
+
+        if car_type:
+            driver=driver.filter(car_type=car_type)
+        
+        if transmission_type:
+            driver=driver.filter(transmission_type=transmission_type)
+       
         serializer=MyBookingSerializer(data=data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
