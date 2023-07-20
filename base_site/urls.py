@@ -25,6 +25,7 @@ urlpatterns = [
     path('api/enquiry/<int:id>', MyEnquiryGetList.as_view(), name='enquiry-list-id'),
     path('api/enquiry/<int:id>/update', MyEnquiryUpdate.as_view(), name='enquiry-update-list'),
     path('api/enquiry/<int:id>/delete', MyEnquiryDelete.as_view(), name='enquiry-delete-list'),
+    path('search_drivers/', SearchDriverWithinRadius.as_view(), name='search_drivers'),
     
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

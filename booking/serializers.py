@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import PlaceBooking, Clientregistration
+from driver_management.models import AddDriver
 
 
 class MyBookingSerializer(serializers.ModelSerializer):
@@ -11,4 +12,10 @@ class MyBookingSerializer(serializers.ModelSerializer):
 class ClientregistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Clientregistration
+        fields = '__all__'
+
+
+class DriverSerializer(serializers.ModelSerializer)
+    class Meta:
+        model = AddDriver
         fields = '__all__'
