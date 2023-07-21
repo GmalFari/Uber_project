@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import PlaceBooking, Clientregistration
+from .models import  *
 from driver_management.models import AddDriver
 
 
