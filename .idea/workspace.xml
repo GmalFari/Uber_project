@@ -5,15 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="02d811cf-bb41-4d2d-a090-90e6cc2ad56b" name="Changes" comment="error in driver leave class">
-      <change afterPath="$PROJECT_DIR$/media/documents/2023/07/Screenshot_2023-07-10_at_12.44.11_PM_ErLxph3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/images/2023/07/image.jpeg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/driver_management/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/driver_management/migrations/0002_driverbalance_pay_delete_driverleave.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/driver_management/migrations/0003_driverbalance_drivername.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/driver_management/migrations/0004_driverleave.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/driver_management/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/driver_management/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/driver_management/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/driver_management/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base_site/.env" beforeDir="false" afterPath="$PROJECT_DIR$/base_site/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base_site/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/base_site/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/booking/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/booking/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/booking/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/booking/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
