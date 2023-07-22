@@ -124,8 +124,8 @@ class AddDriver(models.Model):
     driver_status = models.CharField(choices=(("1", "Pending"), ("2", "Approved"), ("3", "Rejected"), ("4", "Suspended")),
                                      max_length=10)
     driver_rating= models.BigIntegerField()
-    Current_longitude_location = models.FloatField()
-    Current_latitude_location =  models.FloatField()
+    # Current_longitude_location = models.FloatField()
+    # Current_latitude_location =  models.FloatField()
 
     def __str__(self):
         return self.first_name

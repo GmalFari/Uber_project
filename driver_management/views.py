@@ -8,15 +8,16 @@ from rest_framework import status
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
 from dateutil.relativedelta import relativedelta
+from rest_framework.parsers import MultiPartParser, FormParser
 
 from datetime import date, datetime
 from .utils import leavecalcu
 
-
 class MyDriverList(generics.ListCreateAPIView):
+    
     queryset = AddDriver.objects.all()
     serializer_class = MyDriverSerializer
-    # lookup_field = 'id'
+    parser_classes = (MultiPartParser, FormParser)
 
 
 class MyDriverGetList(APIView):
