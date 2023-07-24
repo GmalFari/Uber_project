@@ -142,7 +142,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': [
         'drf_spectacular.openapi.AutoSchema',
-    ]
+    ],
+
+    # 'DEFAULT_PARSER_CLASSES': [
+    #     'rest_framework.parsers.JSONParser',
+    # ],
 }
 
 # For admin and User permission 

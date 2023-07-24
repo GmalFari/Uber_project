@@ -15,30 +15,30 @@ class AddDriver(models.Model):
     first_name = models.CharField(max_length=20, default=None)
     middle_name = models.CharField(max_length=20, blank=True, null=True)
     last_name = models.CharField(max_length=20, blank=True, null=True)
-    sex = models.CharField(choices=(('M', "Male"), ('F', "Female")), max_length=10, default="M")
+    sex = models.CharField(choices=(('Male', "Male"), ('Female', "Female")), max_length=10, default="Male")
     date_of_birth = models.DateField()
     mobile = models.CharField(max_length=15)
     alt_mobile = models.CharField(max_length=15, blank=True, null=True)
     email = models.EmailField()
-    marital_status = models.CharField(choices=(('M', 'Married'), ('S', 'Single')),
+    marital_status = models.CharField(choices=(('Married', 'Married'), ('Single', 'Single')),
                                       max_length=10)
-    religion = models.CharField(choices=(('H', 'Hindu'), ('M', 'Muslim'),
-                                         ('C', 'Christian'), ('S', 'Sikh')),
+    religion = models.CharField(choices=(('Hindu', 'Hindu'), ('Muslim', 'Muslim'),
+                                         ('Christian', 'Christian'), ('Sikh', 'Sikh')),
                                 max_length=10)
-    cast = models.CharField(choices=(('MA', 'Marathi'),
-                                     ('MU', 'Muslim'), ('GU', 'Gujarati'),
-                                     ('SO', 'SouthIndian'), ('PU', 'Punjabi'),
-                                     ('UP', 'UP'), ('BI', 'Bihari'), ('OT', 'Other')),
+    cast = models.CharField(choices=(('Marathi', 'Marathi'),
+                                     ('Muslim', 'Muslim'), ('Gujrati', 'Gujarati'),
+                                     ('SO', 'SouthIndian'), ('Punjabi', 'Punjabi'),
+                                     ('UP', 'UP'), ('Bihari', 'Bihari'), ('Other', 'Other')),
                             max_length=20,
                             default='MA')
     qualification = models.CharField(choices=(('5', '5th'), ('6', '6th'), ('7', '7th'),
-                                              ('8', '8th'), ('9', '9th'), ('SS', 'SSC'), ('HS', 'HSC'),
+                                              ('8', '8th'), ('9', '9th'), ('SSC', 'SSC'), ('HSC', 'HSC'),
                                               ('BC', 'BCOM'), ('BS', 'BSc'), ('BE', 'BE'), ('BA', 'BA')),
                                      default="SS", max_length=10)
     driver_type = models.CharField(choices=(('Temporary', 'Temporary'), ('Permanent', 'Permanent')), default="Temporary", max_length=10)
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
     zone = models.ForeignKey(Zone, on_delete=models.CASCADE)
-    language = models.CharField(choices=(('HI', 'Hindi'), ('EN', 'English'), ('BH', 'Bhojpuri')), default="HI", max_length=10)
+    language = models.CharField(choices=(('Hindi', 'Hindi'), ('English', 'English'), ('Bhojpuri', 'Bhojpuri')), default="Hindi", max_length=10)
 
     # Address
     t_address = models.CharField(max_length=200)
@@ -52,7 +52,7 @@ class AddDriver(models.Model):
     # Licence Information
     licence_no = models.CharField(max_length=20)
     licence_issued_from = models.CharField(max_length=20)
-    licence_type = models.CharField(choices=(('TR', 'LMV-TR'), ('NT', 'LMV-NT')), default="TR", max_length=10)
+    licence_type = models.CharField(choices=(('LMV-TR', 'LMV-TR'), ('LMV-NT', 'LMV-NT')), default="TR", max_length=10)
     date_of_issue = models.DateField()
     date_of_expiry = models.DateField()
 
@@ -61,21 +61,21 @@ class AddDriver(models.Model):
     expected_salary = models.FloatField()
     pan_card_no = models.CharField(max_length=15, blank=True, null=True)
     aadhar_card_no = models.CharField(max_length=20)
-    blood_group = models.CharField(choices=(("1", "O+"), ("2", "O-"), ("3", "A+"), ("3", "A-"), ("3", "B+"),
-                                            ("3", "B-"), ("3", "AB+"), ("3", "AB-")),
+    blood_group = models.CharField(choices=(("O+", "O+"), ("O-", "O-"), ("A+", "A+"), ("A-", "A-"), ("B+", "B+"),
+                                            ("B-", "B-"), ("AB+", "AB+"), ("AB-", "AB-")),
                                    max_length=10)
-    passport = models.CharField(choices=(("1", "Yes"), ("2", "No")), max_length=10)
+    passport = models.CharField(choices=(("Yes", "Yes"), ("No", "No")), max_length=10)
     passport_no = models.CharField(max_length=20, null=True, blank=True)
-    heavy_vehicle = models.CharField(choices=(("1", "Yes"), ("2", "No")), max_length=10)
-    car_transmission = models.CharField(choices=(("1", "Manual"), ("2", "Automatic"), ("3", "Luxury")), max_length=10)
+    heavy_vehicle = models.CharField(choices=(("Yes", "Yes"), ("No", "No")), max_length=10)
+    car_transmission = models.CharField(choices=(("Manual", "Manual"), ("Automatic", "Automatic"), ("Luxury", "Luxury")), max_length=10)
     start_doh_date = models.DateField()
     end_doh_date = models.DateField()
 
     # Car Details
     car_company_name = models.CharField(max_length=15)
-    transmission_type = models.CharField(choices=(("1", "Manual"), ("2", "Automatic"), ("3", "Luxury")), max_length=10)
-    car_type = models.CharField(choices=(("1", "SUV"), ("2", "Sedan"), ("3", "Luxury"), ("4", "Hatchback"),
-                                         ("5", "MPV"), ("6", "MUV")),
+    transmission_type = models.CharField(choices=(("Manual", "Manual"), ("Automatic", "Automatic"), ("Luxury", "Luxury")), max_length=10)
+    car_type = models.CharField(choices=(("SUV", "SUV"), ("Sedan", "Sedan"), ("Luxury", "Luxury"), ("Hatchback", "Hatchback"),
+                                         ("MVP", "MPV"), ("MUV", "MUV")),
                                 max_length=10)
     driven_km = models.FloatField()
 
@@ -108,20 +108,20 @@ class AddDriver(models.Model):
     reference = models.CharField(max_length=15)
 
     # Driver status update
-    schedule_training = models.CharField(choices=(("1", "Yes"), ("2", "No")), max_length=10)
+    schedule_training = models.CharField(choices=(("Yes", "Yes"), ("No", "No")), max_length=10)
     training_date = models.DateField()
-    training_status = models.CharField(choices=(("1", "Yes"), ("2", "No")), max_length=10)
-    Purchase_uniform = models.CharField(choices=(("1", "Yes"), ("2", "No")), max_length=10)
-    scheduled_driving_test = models.CharField(choices=(("1", "Yes"), ("2", "No")), max_length=10)
+    training_status = models.CharField(choices=(("Yes", "Yes"), ("No", "No")), max_length=10)
+    Purchase_uniform = models.CharField(choices=(("Yes", "Yes"), ("No", "No")), max_length=10)
+    scheduled_driving_test = models.CharField(choices=(("Yes", "Yes"), ("No", "No")), max_length=10)
     driving_test_date = models.DateField()
-    driving_status = models.CharField(choices=(("1", "Approve"), ("2", "Reject")), max_length=10)
-    is_approval_done = models.CharField(choices=(("1", "Yes"), ("2", "No")), max_length=10)
-    police_verification = models.CharField(choices=(("1", "Yes"), ("2", "No")), max_length=10)
-    week_off = models.CharField(choices=(("1", "Monday"), ("1", "Tuesday"), ("1", "Wednesday"),
-                                         ("1", "Thursday"), ("1", "Friday"), ("1", "Saturday"), ("1", "Sunday")),
+    driving_status = models.CharField(choices=(("Approve", "Approve"), ("Reject", "Reject")), max_length=10)
+    is_approval_done = models.CharField(choices=(("Yes", "Yes"), ("No", "No")), max_length=10)
+    police_verification = models.CharField(choices=(("Yes", "Yes"), ("No", "No")), max_length=10)
+    week_off = models.CharField(choices=(("Monday", "Monday"), ("Tuesday", "Tuesday"), ("Wednesday", "Wednesday"),
+                                         ("Thursday", "Thursday"), ("Friday", "Friday"), ("Saturday", "Saturday"), ("Sunday", "Sunday")),
                                 max_length=10)
-    scheme_type = models.CharField(choices=(("1", "Platinum"), ("2", "Gold"), ("3", "Silver")), max_length=10)
-    driver_status = models.CharField(choices=(("1", "Pending"), ("2", "Approved"), ("3", "Rejected"), ("4", "Suspended")),
+    scheme_type = models.CharField(choices=(("Platinum", "Platinum"), ("Gold", "Gold"), ("Silver", "Silver")), max_length=10)
+    driver_status = models.CharField(choices=(("Pending", "Pending"), ("Approved", "Approved"), ("Rejected", "Rejected"), ("Suspended", "Suspended")),
                                      max_length=10)
     driver_rating= models.BigIntegerField()
     # Current_longitude_location = models.FloatField()
