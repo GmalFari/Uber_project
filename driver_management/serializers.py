@@ -1,6 +1,18 @@
+from django.contrib.auth.models import User
 from rest_framework import serializers
 from .models import *
 
+
+
+class DriversignupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= User
+        fields= '__all__'
+
+class Driverlocationserializer(serializers.ModelSerializer):
+    class Meta:
+        model= Driverlocation
+        fields= '__all__'
 
 class MyDriverSerializer(serializers.ModelSerializer):
     class Meta:

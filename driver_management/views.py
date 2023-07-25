@@ -9,18 +9,61 @@ from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
 from dateutil.relativedelta import relativedelta
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth import authenticate, login
+from rest_framework.permissions import IsAuthenticated
+
 
 from datetime import date, datetime
 from .utils import leavecalcu
 
+class Driversignup(APIView):   # For Driver signup
+    def post(self, request):
+        data=request.data
+        Dri_serializer= DriversignupSerializer(data=data)
+        
+        if Dri_serializer.is_valid():
+            user=User(username=Dri_serializer.validated_data['username'],
+                      email=Dri_serializer.validated_data['email'])
+            password=Dri_serializer.validated_data['password']
+            user.set_password(password)
+            user.save()
+            return Response({'msg':'Driver signup is done', 'data':Dri_serializer.data}, status=status.HTTP_201_CREATED)
+        else:
+            return Response ({'msg':'Some thing wrong', 'data':Dri_serializer.errors}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+# Driver Login
+class Driverlogin(APIView): 
+    def post(self, request):
+        username = request.data['username']
+        password = request.data['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return Response({'msg': 'Login Success'}, status=status.HTTP_200_OK)
+        return Response({'msg': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
+ # for Driver location update   
+class Driverlocation(APIView):  
+    def post(self, request):
+        permission_classes = [IsAuthenticated]
+       
+        user=request.user
+        serializer= Driverlocationserializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'msg':'location is update', 'data':serializer.data}, status=status.HTTP_201_CREATED)
+        else:
+            return Response({'msg':'unable to update', 'data':serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
 class MyDriverList(generics.ListCreateAPIView):
-    
+     
     queryset = AddDriver.objects.all()
     serializer_class = MyDriverSerializer
     parser_classes = [MultiPartParser, FormParser]
 
 
 
+        
 class MyDriverGetList(APIView):
     def get(self, request, id):
         try:

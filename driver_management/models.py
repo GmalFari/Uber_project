@@ -2,7 +2,7 @@ from django.db import models
 from datetime import date
 from user_master.models import State, City, Location, Branch, Zone
 from django.utils.html import mark_safe
-
+from django.contrib.auth.models import User
 
 class AddDriver(models.Model):
     image_upload = models.ImageField(upload_to='images/%Y/%m/', default=None)
@@ -161,3 +161,11 @@ class Driverleave(models.Model):
 class DriverBalance(models.Model):
     pass
 
+
+class Driverlocation(models.Model):
+    driver= models.ForeignKey(User, on_delete=models.CASCADE)
+    driver_lat= models.DecimalField(max_digits=10, decimal_places=6, blank=True, null=True)
+    driver_long= models.DecimalField(max_digits=10, decimal_places=6, blank=True, null=True)
+
+    def __str__(self):
+        return str(self.driver)
