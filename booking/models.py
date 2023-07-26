@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from client_management.models import AddClient
 from driver_management.models import AddDriver
 from datetime import datetime, date
@@ -9,6 +10,7 @@ from dateutil.parser import parse
 
 
 class Clientregistration(models.Model):
+    #user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='clientregistration', null=True, blank=True)
     full_name=models.CharField(max_length=200, null=True, blank=True)
     mobile_number=models.BigIntegerField()
     city=models.CharField(max_length=100, null=True, blank=True)

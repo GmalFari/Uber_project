@@ -11,7 +11,7 @@ from dateutil.relativedelta import relativedelta
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate, login
-from rest_framework.permissions import IsAuthenticated
+
 
 
 from datetime import date, datetime
@@ -45,7 +45,7 @@ class Driverlogin(APIView):
  # for Driver location update   
 class Driverlocation(APIView):  
     def post(self, request):
-        permission_classes = [IsAuthenticated]
+        
        
         user=request.user
         serializer= Driverlocationserializer(data=request.data)
