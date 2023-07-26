@@ -28,7 +28,8 @@ packege=(
 class PlaceBooking(models.Model):
     client_name = models.ForeignKey(Clientregistration, on_delete=models.CASCADE)
     trip_type=models.CharField(max_length=50, null=True ,blank=True)
-    packege=models.CharField(choices=packege, max_length=20, default='4Hours')
+    # packege=models.CharField(choices=packege, max_length=20, default='4Hours')
+    packege=models.CharField(max_length=20, default='4Hours')
     user_curr_lat=models.FloatField()
     user_curr_long=models.FloatField()
     from_date = models.DateField()
@@ -37,7 +38,7 @@ class PlaceBooking(models.Model):
     gear_type= models.CharField(max_length=100, null=True)
     pickup_location=models.CharField(max_length=100, null=True)
     drop_location=models.CharField(max_length=100, null=True)
-    driver=models.ForeignKey(AddDriver, on_delete=models.CASCADE)
+    # driver=models.ForeignKey(AddDriver, on_delete=models.CASCADE)
     booking_time=models.DateTimeField(auto_now_add=True)
    
 

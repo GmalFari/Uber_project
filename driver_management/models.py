@@ -90,7 +90,7 @@ class AddDriver(models.Model):
 
     # Previous Employment details
     company_name = models.CharField(max_length=30)
-    address_location = models.CharField(max_length=20)
+    address_location = models.CharField(max_length=100)
     contact_person = models.CharField(max_length=20)
     worked_from = models.DateField()
     worked_till = models.DateField()

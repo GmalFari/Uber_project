@@ -57,7 +57,7 @@ class Driverlocation(APIView):
 
 class MyDriverList(generics.ListCreateAPIView):
      
-    queryset = AddDriver.objects.all()
+    queryset = AddDriver.objects.all().order_by('id').reverse()
     serializer_class = MyDriverSerializer
     parser_classes = [MultiPartParser, FormParser]
 

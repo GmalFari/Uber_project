@@ -16,8 +16,12 @@ from math import sin, radians, cos, sqrt, atan2
 class userregistration(APIView):
     def post(self, request):
         data=request.data
+
+        full_name=request.data['full_name']
+
         serializer=ClientregistrationSerializer(data=data)
         if serializer.is_valid():
+            username=request.session['full_name'] = full_name
             serializer.save()
             print(f'User Registration is done: {serializer.data}')
             return Response({'msg': 'user is created'}, status=status.HTTP_201_CREATED)
@@ -29,6 +33,8 @@ class userregistration(APIView):
 class MyBookingList(APIView):
     def post(self, request):
         data=request.data
+        #user=request.Clientregistration.full_name
+        full_name=request.session['full_name']
         
         driver_type=request.data.get('driver_type')
 
