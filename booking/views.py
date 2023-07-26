@@ -2,6 +2,7 @@ from rest_framework import generics
 from rest_framework.views import APIView 
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.authentication import SessionAuthentication
 
 from .models import *
 from .serializers import *
@@ -17,54 +18,73 @@ class userregistration(APIView):
     def post(self, request):
         data=request.data
 
-        full_name=request.data['full_name']
-
         serializer=ClientregistrationSerializer(data=data)
         if serializer.is_valid():
-            username=request.session['full_name'] = full_name
+            # request.session['full_name'] = full_name
+            
             serializer.save()
             print(f'User Registration is done: {serializer.data}')
             return Response({'msg': 'user is created'}, status=status.HTTP_201_CREATED)
         
         else:
              return Response({'msg': 'user not created'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class Userlogin(APIView):
+    def post(self, request):
+        full_name=request.data['full_name']
+        mobile_number=request.data['mobile_number']
+        
+
+        if Clientregistration.objects.filter(full_name=full_name, mobile_number=mobile_number).exists():
+            return Response ({
+                'msg':'user can book driver',
+                'status':status.HTTP_200_OK
+            })
+        else:
+              return Response ({
+                'msg':'user not login for book driver',
+                'status':status.HTTP_400_BAD_REQUEST
+            })
         
 
 class MyBookingList(APIView):
     def post(self, request):
         data=request.data
-        #user=request.Clientregistration.full_name
-        full_name=request.session['full_name']
-        
-        driver_type=request.data.get('driver_type')
-
-        driver_rating=request.data.get('driver_rating')
-
-        car_type=request.data.get('car_type')
-
-        transmission_type=request.data.get('transmission_type')
-
-        driver=AddDriver.objects.all()
-
-        if driver_type:
-            driver=driver.filter(driver_type=driver_type)
-        
-        if driver_rating:
-            driver=driver.filter(driver_rating=driver_rating)
-
-        if car_type:
-            driver=driver.filter(car_type=car_type)
-        
-        if transmission_type:
-            driver=driver.filter(transmission_type=transmission_type)
-       
+        authentication_classes=[SessionAuthentication]
+        print(authentication_classes)
         serializer=MyBookingSerializer(data=data)
-        if serializer.is_valid(raise_exception=True):
+        if serializer.is_valid():
             serializer.save()
             print(serializer.data)
-            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        #user=request.Clientregistration.full_name
+        # full_name=request.session['full_name']
+        #print(f'session is activate for this:{full_name}')
+        #driver_type=request.data.get('driver_type')
+
+        # driver_rating=request.data.get('driver_rating')
+
+        # car_type=request.data.get('car_type')
+
+        # transmission_type=request.data.get('transmission_type')
+
+        # driver=AddDriver.objects.all()
+
+        # if driver_type:
+        #     driver=driver.filter(driver_type=driver_type)
+        
+        # if driver_rating:
+        #     driver=driver.filter(driver_rating=driver_rating)
+
+        # if car_type:
+        #     driver=driver.filter(car_type=car_type)
+        
+        # if transmission_type:
+        #     driver=driver.filter(transmission_type=transmission_type)
+       
+      
 
 
 class SearchDriverWithinRadius(APIView):

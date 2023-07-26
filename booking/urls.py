@@ -4,6 +4,10 @@ from . import views
 
 urlpatterns=[
     path('userregistration/', views.userregistration.as_view(), name='userregistration'),
-    path('booking/', views.MyBookingList.as_view(), name='booking-list'),
+
+    path('userlogin/', views.Userlogin.as_view()),
+
+    path('booking/', views.MyBookingList.as_view(), name='booking'),
+
     path('search_drivers/', views.SearchDriverWithinRadius.as_view(), name='search_drivers'),
 ]

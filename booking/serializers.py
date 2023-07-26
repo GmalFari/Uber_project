@@ -5,7 +5,7 @@ from user_master.models import Zone
 
 
 class MyBookingSerializer(serializers.ModelSerializer):
-    zone= serializers.PrimaryKeyRelatedField(queryset=Zone.objects.all())
+    #zone= serializers.PrimaryKeyRelatedField(queryset=Zone.objects.all())
     class Meta:
         model = PlaceBooking
         fields = '__all__'
