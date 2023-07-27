@@ -8,9 +8,10 @@ from rest_framework.authtoken.models import Token
 from .models import *
 from .serializers import *
 from driver_management.models import AddDriver
+from driver_management.serializers import *
 
-from geopy.geocoders import Nominatim
-import geocoder
+# from geopy.geocoders import Nominatim
+# import geocoder
 
 from math import sin, radians, cos, sqrt, atan2
 
@@ -26,7 +27,13 @@ class userregistration(APIView):
             return Response({'msg': 'user is created'}, status=status.HTTP_201_CREATED)
         
         else:
-             return Response({'msg': 'user not created'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'msg': 'user not created'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+    def get(self, request):
+        user = Clientregistration.objects.all().order_by('full_name').reverse()
+        serializer = ClientregistrationSerializer(user, many=True)
+        return Response(serializer.data)
+    
 
 class Userlogin(APIView):
     def post(self, request):
@@ -88,6 +95,13 @@ class MyBookingList(APIView):
         
         # if transmission_type:
         #     driver=driver.filter(transmission_type=transmission_type)
+
+    def get(self, request):
+        booking=PlaceBooking.objects.all()
+        authentication_classes=[SessionAuthentication]
+        serializer = MyBookingSerializer(booking, many=True)
+        return Response(serializer.data)
+
        
       
 

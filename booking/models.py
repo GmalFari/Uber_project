@@ -1,12 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from client_management.models import AddClient
-from driver_management.models import AddDriver
+# from driver_management.models import AddDriver
 from datetime import datetime, date
+from django.utils import timezone 
+# from dateutil.parser import parse
 
-class userregistration(models.Model):
+class Clientregistration(models.Model):
     full_name=models.CharField(max_length=200, null=True, blank=True)
-    mobile_number=models.BigIntegerField()
+    mobile_number=models.CharField(max_length=14)
     city=models.CharField(max_length=100, null=True, blank=True)
     alternet_number=models.BigIntegerField()
 
