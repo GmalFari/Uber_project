@@ -22,12 +22,12 @@ class userregistration(APIView):
         serializer=ClientregistrationSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            user= Clientregistration.objects.get(full_name=request.data['full_name'])
+            #user= Clientregistration.objects.get(full_name=request.data['full_name'])
 
-            token = Token.objects.create(user=user)
-            print(f'User Registration is done: {serializer.data}')
+            # token = Token.objects.create(user=user)
+            # print(f'User Registration is done: {serializer.data}')
 
-            return Response({'msg': 'user is created', 'token':str(token)}, status=status.HTTP_201_CREATED)
+            return Response({'msg': 'user is created'}, status=status.HTTP_201_CREATED)
         
         else:
              return Response({'msg': 'user not created'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
