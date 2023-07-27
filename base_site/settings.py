@@ -18,7 +18,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-AUTH_USER_MODEL = "booking.Clientregistration"
+#AUTH_USER_MODEL = "booking.User"
 # Application definition
 
 INSTALLED_APPS = [

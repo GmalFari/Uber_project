@@ -22,12 +22,8 @@ class userregistration(APIView):
         serializer=ClientregistrationSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            user= Clientregistration.objects.get(full_name=request.data['full_name'])
 
-            token = Token.objects.create(user=user)
-            print(f'User Registration is done: {serializer.data}')
-
-            return Response({'msg': 'user is created', 'token':str(token)}, status=status.HTTP_201_CREATED)
+            return Response({'msg': 'user is created'}, status=status.HTTP_201_CREATED)
         
         else:
              return Response({'msg': 'user not created'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -38,7 +34,7 @@ class Userlogin(APIView):
         mobile_number=request.data['mobile_number']
         
       
-        if Clientregistration.objects.filter(full_name=full_name, mobile_number=mobile_number).exists():
+        if userregistration.objects.filter(full_name=full_name, mobile_number=mobile_number).exists():
             return Response ({
                 'msg':'user can book driver',
                 'status':status.HTTP_200_OK
@@ -51,8 +47,8 @@ class Userlogin(APIView):
         
 
 class MyBookingList(APIView):
-    authentication_classes=[BasicAuthentication]
-    permission_classes=[IsAuthenticated]
+    # authentication_classes=[BasicAuthentication]
+    # permission_classes=[IsAuthenticated]
     def post(self, request, format=None):
         data=request.data
         user=request.user

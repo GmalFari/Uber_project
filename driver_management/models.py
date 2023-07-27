@@ -2,7 +2,8 @@ from django.db import models
 from datetime import date
 from user_master.models import State, City, Location, Branch, Zone
 from django.utils.html import mark_safe
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+
 from django.conf import settings
 
 class AddDriver(models.Model):
