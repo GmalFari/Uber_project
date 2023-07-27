@@ -37,7 +37,7 @@ class Userlogin(APIView):
         full_name=request.data['full_name']
         mobile_number=request.data['mobile_number']
         
-
+      
         if Clientregistration.objects.filter(full_name=full_name, mobile_number=mobile_number).exists():
             return Response ({
                 'msg':'user can book driver',
@@ -51,15 +51,18 @@ class Userlogin(APIView):
         
 
 class MyBookingList(APIView):
-    authentication_classes=[TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    authentication_classes=[BasicAuthentication]
+    permission_classes=[IsAuthenticated]
     def post(self, request, format=None):
         data=request.data
-        user = request.user.clientregistration
-        data['client_name'] = user.id
+        user=request.user
+
+        # user = request.user.clientregistration
+        # data['client_name'] = user.id
+        
         serializer=MyBookingSerializer(data=data)
         if serializer.is_valid():
-                serializer.save(user)
+                serializer.save()
                 print(serializer.data)
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
