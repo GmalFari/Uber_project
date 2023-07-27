@@ -121,11 +121,8 @@ class AddDriver(models.Model):
                                          ("Thursday", "Thursday"), ("Friday", "Friday"), ("Saturday", "Saturday"), ("Sunday", "Sunday")),
                                 max_length=10)
     scheme_type = models.CharField(choices=(("Platinum", "Platinum"), ("Gold", "Gold"), ("Silver", "Silver")), max_length=10)
-    driver_status = models.CharField(choices=(("Pending", "Pending"), ("Approved", "Approved"), ("Rejected", "Rejected"), ("Suspended", "Suspended")),
-                                     max_length=10)
-    driver_rating= models.BigIntegerField()
-    # Current_longitude_location = models.FloatField()
-    # Current_latitude_location =  models.FloatField()
+    driver_status = models.CharField(choices=(("Pending", "Pending"), ("Approved", "Approved"), ("Rejected", "Rejected"), ("Suspended", "Suspended")),max_length=10)
+
 
     def __str__(self):
         return self.first_name
@@ -145,7 +142,6 @@ class ReferDriver(models.Model):
 
 
 class Driverleave(models.Model):
-    drivername=models.ForeignKey(AddDriver, on_delete=models.CASCADE)
     reason=models.CharField(max_length=100, null=True, blank=True)
     leave_from_date=models.DateField()
 
