@@ -3,8 +3,7 @@ from django.contrib.auth.models import User
 from client_management.models import AddClient
 from driver_management.models import AddDriver
 from datetime import datetime, date
-from django.utils import timezone 
-from dateutil.parser import parse
+
 
 
 
@@ -30,8 +29,12 @@ packege=(
 class PlaceBooking(models.Model):
     client_name = models.ForeignKey(Clientregistration, on_delete=models.CASCADE)
     trip_type=models.CharField(max_length=50, null=True ,blank=True)
+<<<<<<< Updated upstream
     # packege=models.CharField(choices=packege, max_length=20, default='4Hours')
     packege=models.CharField(max_length=20, default='4Hours')
+=======
+    package=models.CharField(choices=packege, max_length=20, default='4Hours')
+>>>>>>> Stashed changes
     user_curr_lat=models.FloatField()
     user_curr_long=models.FloatField()
     from_date = models.DateField()
