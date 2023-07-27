@@ -2,8 +2,9 @@ from rest_framework import generics
 from rest_framework.views import APIView 
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.authentication import SessionAuthentication
-
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
+from rest_framework.authtoken.models import Token
 from .models import *
 from .serializers import *
 from driver_management.models import AddDriver
@@ -21,10 +22,12 @@ class userregistration(APIView):
 
         serializer=ClientregistrationSerializer(data=data)
         if serializer.is_valid():
-            # request.session['full_name'] = full_name
-            
             serializer.save()
-            print(f'User Registration is done: {serializer.data}')
+            #user= Clientregistration.objects.get(full_name=request.data['full_name'])
+
+            # token = Token.objects.create(user=user)
+            # print(f'User Registration is done: {serializer.data}')
+
             return Response({'msg': 'user is created'}, status=status.HTTP_201_CREATED)
         
         else:
@@ -41,7 +44,7 @@ class Userlogin(APIView):
         full_name=request.data['full_name']
         mobile_number=request.data['mobile_number']
         
-
+      
         if Clientregistration.objects.filter(full_name=full_name, mobile_number=mobile_number).exists():
             return Response ({
                 'msg':'user can book driver',
@@ -55,17 +58,23 @@ class Userlogin(APIView):
         
 
 class MyBookingList(APIView):
-    def post(self, request):
+    # authentication_classes=[BasicAuthentication]
+    # permission_classes=[IsAuthenticated]
+    def post(self, request, format=None):
         data=request.data
-        authentication_classes=[SessionAuthentication]
-        print(authentication_classes)
+        user=request.user
+
+        # user = request.user.clientregistration
+        # data['client_name'] = user.id
+        
         serializer=MyBookingSerializer(data=data)
         if serializer.is_valid():
-            serializer.save()
-            print(serializer.data)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+                serializer.save()
+                print(serializer.data)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
         #user=request.Clientregistration.full_name
         # full_name=request.session['full_name']
         #print(f'session is activate for this:{full_name}')

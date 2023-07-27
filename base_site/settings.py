@@ -18,6 +18,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+#AUTH_USER_MODEL = "booking.Clientregistration"
 # Application definition
 
 INSTALLED_APPS = [
@@ -29,7 +30,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
-    
     'corsheaders',
     "drf_spectacular",
     "booking",
@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     "client_management",
     "enquiry",
     "django_filters",
-    # "rest_framework_gis",
+    "rest_framework.authtoken",
+   
    
 ]
 
@@ -145,27 +146,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 REST_FRAMEWORK = {
-    'DEFAULT_SCHEMA_CLASS': [
-        'drf_spectacular.openapi.AutoSchema',
-    ],
-
-    # 'DEFAULT_PARSER_CLASSES': [
-    #     'rest_framework.parsers.JSONParser',
-    # ],
-}
-
-# For admin and User permission 
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ]
-}
-
-REST_FRAMEWORK = {
-     
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ]
 }
+
+
+
 

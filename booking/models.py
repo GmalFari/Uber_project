@@ -9,6 +9,7 @@ from django.utils import timezone
 
 
 class Clientregistration(models.Model):
+    #user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='clientregistration', null=True, blank=True)
     full_name=models.CharField(max_length=200, null=True, blank=True)
     mobile_number=models.CharField(max_length=14)
     city=models.CharField(max_length=100, null=True, blank=True)
@@ -28,8 +29,7 @@ packege=(
 class PlaceBooking(models.Model):
     client_name = models.ForeignKey(Clientregistration, on_delete=models.CASCADE)
     trip_type=models.CharField(max_length=50, null=True ,blank=True)
-    # packege=models.CharField(choices=packege, max_length=20, default='4Hours')
-    packege=models.CharField(max_length=20, default='4Hours')
+    packege=models.CharField(choices=packege, max_length=20, default='4Hours')
     user_curr_lat=models.FloatField()
     user_curr_long=models.FloatField()
     from_date = models.DateField()

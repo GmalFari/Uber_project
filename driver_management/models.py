@@ -3,6 +3,7 @@ from datetime import date
 from user_master.models import State, City, Location, Branch, Zone
 from django.utils.html import mark_safe
 from django.contrib.auth.models import User
+from django.conf import settings
 
 class AddDriver(models.Model):
     image_upload = models.ImageField(upload_to='images/%Y/%m/', default=None)
@@ -75,7 +76,7 @@ class AddDriver(models.Model):
     car_company_name = models.CharField(max_length=15)
     transmission_type = models.CharField(choices=(("Manual", "Manual"), ("Automatic", "Automatic"), ("Luxury", "Luxury")), max_length=10)
     car_type = models.CharField(choices=(("SUV", "SUV"), ("Sedan", "Sedan"), ("Luxury", "Luxury"), ("Hatchback", "Hatchback"),
-                                         ("MVP", "MPV"), ("MUV", "MUV")),
+                                         ("MPV", "MPV"), ("MUV", "MUV")),
                                 max_length=10)
     driven_km = models.FloatField()
 
@@ -104,7 +105,7 @@ class AddDriver(models.Model):
     approx_age = models.IntegerField()
     mobile_no = models.CharField(max_length=20)
     education_details = models.CharField(max_length=20)
-    address = models.CharField(max_length=30)
+    address = models.CharField(max_length=200)
     reference = models.CharField(max_length=15)
 
     # Driver status update
@@ -159,7 +160,7 @@ class DriverBalance(models.Model):
 
 
 class Driverlocation(models.Model):
-    driver= models.ForeignKey(User, on_delete=models.CASCADE)
+    driver= models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     driver_lat= models.DecimalField(max_digits=10, decimal_places=6, blank=True, null=True)
     driver_long= models.DecimalField(max_digits=10, decimal_places=6, blank=True, null=True)
 
