@@ -20,11 +20,20 @@ from .manager import CustomUserManager
 
 class Clientregistration(AbstractUser):
     username = None
-    email = models.EmailField(('email address'), unique=True)
+    #last_login= models.DateTimeField()
+    is_superuser= models.BooleanField(default=False)
+    last_name= models.CharField(max_length=100, null=True, blank=True)
+    is_superuser= models.BooleanField()
+    is_staff = models.BooleanField()
+    is_active = models.BooleanField()
+    date_joined =models.DateField(auto_now_add=False)
+    email= models.EmailField(unique=True)
     password= models.CharField(max_length=100, null=True, blank=True)
     first_name = models.CharField(max_length=100, null=True, blank=True)
-    last_login= models.DateTimeField(auto_now_add=True)
-    is_superuser= models.BooleanField(default=False)
+    last_name = models.CharField(max_length=100, null=True, blank=True)
+    user_permissions=models.CharField(max_length=200, null=True, blank=True)
+    groups = models.CharField(max_length=200,null=True, blank=True)
+
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
