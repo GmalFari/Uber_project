@@ -7,10 +7,19 @@ from django.utils import timezone
 # from dateutil.parser import parse
 
 class Clientregistration(models.Model):
+    cities=(
+        ('Mumbai', 'Mumbai'),
+        ("Navi Mumbai", "Navi Mumbai"),
+        ("Thane", "Thane"),
+        ("Pune", "Pune"),
+        ("Bangaluru", "Bangaluru"),
+        ("Delhi", "Delhi")
+    )
     full_name=models.CharField(max_length=200, null=True, blank=True)
     mobile_number=models.CharField(max_length=14)
-    city=models.CharField(max_length=100, null=True, blank=True)
-    alternet_number=models.BigIntegerField()
+    city=models.CharField(choices=cities,max_length=100, null=True, blank=True, default="Mumbai")
+    address= models.CharField(max_length=200, null=True, blank=True)
+    
 
 
     def __str__(self):
@@ -18,19 +27,19 @@ class Clientregistration(models.Model):
     
   
 class PlaceBooking(models.Model):
-    # client_name = models.ForeignKey(Clientregistration, on_delete=models.CASCADE)
+    client_name = models.ForeignKey(Clientregistration, on_delete=models.CASCADE)
     trip_type=models.CharField(max_length=50, null=True ,blank=True)
     
     # user_curr_lat=models.FloatField()
     # user_curr_long=models.FloatField()
-    # from_date = models.DateField()
-    # to_date = models.DateField()
-    # car_type=models.CharField(max_length=100, null=True)
-    # gear_type= models.CharField(max_length=100, null=True)
-    # pickup_location=models.CharField(max_length=100, null=True)
-    # drop_location=models.CharField(max_length=100, null=True)
-    # # driver=models.ForeignKey(AddDriver, on_delete=models.CASCADE)
-    # booking_time=models.DateTimeField(auto_now_add=True)
+    from_date = models.DateField()
+    to_date = models.DateField()
+    car_type=models.CharField(max_length=100, null=True)
+    gear_type= models.CharField(max_length=100, null=True)
+    pickup_location=models.CharField(max_length=100, null=True)
+    drop_location=models.CharField(max_length=100, null=True)
+    # driver=models.ForeignKey(AddDriver, on_delete=models.CASCADE)
+    booking_time=models.DateTimeField(auto_now_add=True)
    
 
     def __str__(self):

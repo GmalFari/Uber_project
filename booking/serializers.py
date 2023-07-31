@@ -6,7 +6,7 @@ from user_master.models import Zone
 
 class ClientregistrationSerializer(serializers.ModelSerializer):
     class Meta:
-        model = userregistration
+        model = Clientregistration
         fields = ['full_name', 'mobile_number', 'city', 'alternet_number']
 
         
@@ -14,7 +14,7 @@ class MyBookingSerializer(serializers.ModelSerializer):
     #zone= serializers.PrimaryKeyRelatedField(queryset=Zone.objects.all())
     class Meta:
         model = PlaceBooking
-        fields = '__all__'
+        fields = ['trip_type', 'from_date','to_date','car_type', 'gear_type', 'pickup_location', 'drop_location']
         # exclude=['client_name']
 
 
