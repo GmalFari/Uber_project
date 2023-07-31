@@ -106,6 +106,22 @@ class MyBookingList(APIView):
         serializer = MyBookingSerializer(booking, many=True)
         return Response(serializer.data)
 
+
+class BookingListWithId(APIView):
+    def get(self, request, id):
+        booking = PlaceBooking.objects.get(id=id)
+        serializer = MyBookingSerializer(booking)
+        return Response(serializer.data)
+    
+    serializer_class = MyBookingSerializer
+
+    def put(self, request, id):
+        booking = PlaceBooking.objects.get(id=id)
+        serializer = MyBookingSerializer(booking, data=request.data, partial=True)
+        if serializer.is_valid:
+            serializer.save()
+            return Response(request.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
        
       
 
