@@ -30,7 +30,7 @@ class userregistration(APIView):
             return Response({'msg': 'user not created'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
     def get(self, request):
-        user = Clientregistration.objects.all().order_by('full_name').reverse()
+        user = bookinguser.objects.all().order_by('full_name').reverse()
         serializer = ClientregistrationSerializer(user, many=True)
         return Response(serializer.data)
     
@@ -54,8 +54,8 @@ class Userlogin(APIView):
         
 
 class MyBookingList(APIView):
-    # authentication_classes=[BasicAuthentication]
-    # permission_classes=[IsAuthenticated]
+    authentication_classes=[BasicAuthentication]
+    permission_classes=[IsAuthenticated]
     def post(self, request, format=None):
         data=request.data
         user=request.user

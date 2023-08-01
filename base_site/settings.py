@@ -19,6 +19,7 @@ ALLOWED_HOSTS = []
 
 
 #AUTH_USER_MODEL = "booking.User"
+#AUTH_USER_MODEL ='authentication.Newuser'
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,7 +39,8 @@ INSTALLED_APPS = [
     "client_management",
     "enquiry",
     "django_filters",
-    "rest_framework.authtoken",
+    "authentication",
+    #"rest_framework.authtoken",
    
    
 ]
