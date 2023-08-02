@@ -48,6 +48,7 @@ class PlaceBooking(models.Model):
 
 @receiver(post_save, sender=PlaceBooking)
 def create_profile(sender, instance, created, **kwargs):
+    
     if created:
         # PlaceBooking.objects.create(instance)
         print("data saved")

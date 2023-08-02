@@ -72,7 +72,7 @@ ROOT_URLCONF = "base_site.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, 'build'),],
+        "DIRS": [os.path.join(BASE_DIR, 'dohfrontend/build'),],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -148,6 +148,8 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+STATICFILES_DIRS=[os.path.join(BASE_DIR, 'dohfrontend/build/static')]
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
@@ -160,7 +162,7 @@ REST_FRAMEWORK = {
 }
 
 #Setup for push notification with firebase
-FIREBASE_APP = initialize_app()
+#FIREBASE_APP = initialize_app()
 cred_path = os.path.join(BASE_DIR, "serviceaccountkey.json")
 cred = credentials.Certificate(cred_path)
 firebase_admin.initialize_app(cred)
