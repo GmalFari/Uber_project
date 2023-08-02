@@ -10,7 +10,7 @@ class ClientregistrationSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = bookinguser
-        fields = ['full_name', 'mobile_number', 'city', 'alternet_number']
+        fields = ['full_name', 'mobile_number', 'city', 'address']
 
         
 class MyBookingSerializer(serializers.ModelSerializer):
