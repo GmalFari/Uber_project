@@ -1,6 +1,9 @@
 import os
 from pathlib import Path
 import environ
+from firebase_admin import initialize_app
+import firebase_admin
+from firebase_admin import credentials
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -18,7 +21,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-#AUTH_USER_MODEL = "booking.Clientregistration"
+#AUTH_USER_MODEL = "booking.User"
+#AUTH_USER_MODEL ='authentication.Newuser'
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,6 +42,8 @@ INSTALLED_APPS = [
     "client_management",
     "enquiry",
     "django_filters",
+    "authentication",
+    "fcm_django",
     "rest_framework.authtoken",
    
    
@@ -80,6 +86,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "base_site.wsgi.application"
+ASGI_APPLICATION = "base_site.asgi.application"
 
 
 env = environ.Env()
@@ -141,6 +148,8 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+#STATICFILES_DIRS=[os.path.join(BASE_DIR, 'dohfrontend/build/static')]
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
@@ -149,9 +158,33 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ]
 }
 
+#Setup for push notification with firebase
+#FIREBASE_APP = initialize_app()
+cred_path = os.path.join(BASE_DIR, "serviceaccountkey.json")
+cred = credentials.Certificate(cred_path)
+firebase_admin.initialize_app(cred)
+FCM_DJANGO_SETTINGS = {
+     # an instance of firebase_admin.App to be used as default for all fcm-django requests
+     # default: None (the default Firebase app)
+    "DEFAULT_FIREBASE_APP": None,
+     # default: _('FCM Django')
+    "APP_VERBOSE_NAME": "django_fcm",
+     # Your firebase API KEY
+    "FCM_SERVER_KEY": "AAAAsM1f8bU:APA91bELsdJ8WaSy...",
+     # true if you want to have only one active device per registered user at a time
+     # default: False
+    "ONE_DEVICE_PER_USER": False,
+
+     # devices to which notifications cannot be sent,
+     # are deleted upon receiving error response from FCM
+     # default: False
+    "DELETE_INACTIVE_DEVICES": True,
+}
 
 
-
+CSRF_COOKIE_NAME = "csrftoken"
+CSRF_HEADER_NAME = "X-CSRFToken"

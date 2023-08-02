@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from .models import *
+from user_master.serializers import *
 
 
 
@@ -15,6 +16,7 @@ class Driverlocationserializer(serializers.ModelSerializer):
         fields= '__all__'
 
 class MyDriverSerializer(serializers.ModelSerializer):
+   
     class Meta:
         model = AddDriver
         fields = '__all__'

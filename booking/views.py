@@ -23,10 +23,6 @@ class userregistration(APIView):
         serializer=ClientregistrationSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            #user= Clientregistration.objects.get(full_name=request.data['full_name'])
-
-            # token = Token.objects.create(user=user)
-            # print(f'User Registration is done: {serializer.data}')
 
             return Response({'msg': 'user is created'}, status=status.HTTP_201_CREATED)
         
@@ -34,7 +30,7 @@ class userregistration(APIView):
             return Response({'msg': 'user not created'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
     def get(self, request):
-        user = Clientregistration.objects.all().order_by('full_name').reverse()
+        user = bookinguser.objects.all().order_by('full_name').reverse()
         serializer = ClientregistrationSerializer(user, many=True)
         return Response(serializer.data)
     
@@ -45,7 +41,7 @@ class Userlogin(APIView):
         mobile_number=request.data['mobile_number']
         
       
-        if Clientregistration.objects.filter(full_name=full_name, mobile_number=mobile_number).exists():
+        if userregistration.objects.filter(full_name=full_name, mobile_number=mobile_number).exists():
             return Response ({
                 'msg':'user can book driver',
                 'status':status.HTTP_200_OK
@@ -58,8 +54,8 @@ class Userlogin(APIView):
         
 
 class MyBookingList(APIView):
-    # authentication_classes=[BasicAuthentication]
-    # permission_classes=[IsAuthenticated]
+    authentication_classes=[BasicAuthentication]
+    permission_classes=[IsAuthenticated]
     def post(self, request, format=None):
         data=request.data
         user=request.user
@@ -106,6 +102,22 @@ class MyBookingList(APIView):
         serializer = MyBookingSerializer(booking, many=True)
         return Response(serializer.data)
 
+
+class BookingListWithId(APIView):
+    def get(self, request, id):
+        booking = PlaceBooking.objects.get(id=id)
+        serializer = MyBookingSerializer(booking)
+        return Response(serializer.data)
+    
+    serializer_class = MyBookingSerializer
+
+    def put(self, request, id):
+        booking = PlaceBooking.objects.get(id=id)
+        serializer = MyBookingSerializer(booking, data=request.data, partial=True)
+        if serializer.is_valid:
+            serializer.save()
+            return Response(request.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
        
       
 

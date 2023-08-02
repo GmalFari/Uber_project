@@ -440,4 +440,4 @@ class MySubscriptionGetList(APIView):
 
 
 def home(request):
-    return render(request, 'user_master/index.html')
+    return render(request, 'index.html')

@@ -2,7 +2,9 @@ from django.db import models
 from datetime import date
 from user_master.models import State, City, Location, Branch, Zone
 from django.utils.html import mark_safe
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+# from authentication.models import *
+
 from django.conf import settings
 
 class AddDriver(models.Model):
@@ -37,8 +39,8 @@ class AddDriver(models.Model):
                                               ('BC', 'BCOM'), ('BS', 'BSc'), ('BE', 'BE'), ('BA', 'BA')),
                                      default="SS", max_length=10)
     driver_type = models.CharField(choices=(('Temporary', 'Temporary'), ('Permanent', 'Permanent')), default="Temporary", max_length=10)
-    branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
-    zone = models.ForeignKey(Zone, on_delete=models.CASCADE)
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE, null=True,blank=True)
+    zone = models.ForeignKey(Zone, on_delete=models.CASCADE, null=True,blank=True)
     language = models.CharField(choices=(('Hindi', 'Hindi'), ('English', 'English'), ('Bhojpuri', 'Bhojpuri')), default="Hindi", max_length=10)
 
     # Address
@@ -47,7 +49,7 @@ class AddDriver(models.Model):
     state = models.ForeignKey(State, on_delete=models.CASCADE)
     city = models.ForeignKey(City, on_delete=models.CASCADE)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
-    pincode = models.CharField(max_length=10)
+    pincode = models.CharField(max_length=10, null=True,blank=True)
     aggrement_expiry_date = models.DateField()
 
     # Licence Information
@@ -65,15 +67,15 @@ class AddDriver(models.Model):
     blood_group = models.CharField(choices=(("O+", "O+"), ("O-", "O-"), ("A+", "A+"), ("A-", "A-"), ("B+", "B+"),
                                             ("B-", "B-"), ("AB+", "AB+"), ("AB-", "AB-")),
                                    max_length=10)
-    passport = models.CharField(choices=(("Yes", "Yes"), ("No", "No")), max_length=10)
+    passport = models.CharField(choices=(("Yes", "Yes"), ("No", "No")), max_length=10,null=True,blank=True)
     passport_no = models.CharField(max_length=20, null=True, blank=True)
-    heavy_vehicle = models.CharField(choices=(("Yes", "Yes"), ("No", "No")), max_length=10)
+    heavy_vehicle = models.CharField(choices=(("Yes", "Yes"), ("No", "No")), max_length=10, null=True,blank=True)
     car_transmission = models.CharField(choices=(("Manual", "Manual"), ("Automatic", "Automatic"), ("Luxury", "Luxury")), max_length=10)
     start_doh_date = models.DateField()
     end_doh_date = models.DateField()
 
     # Car Details
-    car_company_name = models.CharField(max_length=15)
+    car_company_name = models.CharField(max_length=15, null=True,blank=True)
     transmission_type = models.CharField(choices=(("Manual", "Manual"), ("Automatic", "Automatic"), ("Luxury", "Luxury")), max_length=10)
     car_type = models.CharField(choices=(("SUV", "SUV"), ("Sedan", "Sedan"), ("Luxury", "Luxury"), ("Hatchback", "Hatchback"),
                                          ("MPV", "MPV"), ("MUV", "MUV")),
@@ -100,8 +102,8 @@ class AddDriver(models.Model):
     car_driven = models.CharField(max_length=20)
 
     # Family/Neighbour history detail
-    relationship = models.CharField(max_length=20)
-    member_name = models.CharField(max_length=20)
+    relationship = models.CharField(max_length=100)
+    member_name = models.CharField(max_length=100)
     approx_age = models.IntegerField()
     mobile_no = models.CharField(max_length=20)
     education_details = models.CharField(max_length=20)
@@ -123,7 +125,7 @@ class AddDriver(models.Model):
                                 max_length=10)
     scheme_type = models.CharField(choices=(("Platinum", "Platinum"), ("Gold", "Gold"), ("Silver", "Silver")), max_length=10)
     driver_status = models.CharField(choices=(("Pending", "Pending"), ("Approved", "Approved"), ("Rejected", "Rejected"), ("Suspended", "Suspended")),max_length=10)
-
+    driver_rating= models.PositiveBigIntegerField()
 
     def __str__(self):
         return self.first_name
@@ -160,7 +162,7 @@ class DriverBalance(models.Model):
 
 
 class Driverlocation(models.Model):
-    driver= models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    driver= models.ForeignKey(AddDriver, on_delete=models.CASCADE)
     driver_lat= models.DecimalField(max_digits=10, decimal_places=6, blank=True, null=True)
     driver_long= models.DecimalField(max_digits=10, decimal_places=6, blank=True, null=True)
 
