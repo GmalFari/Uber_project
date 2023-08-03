@@ -7,10 +7,9 @@ urlpatterns = [
 
     path('api/login', Driverlogin.as_view(), name='driver-login'),
 
-    path('api/driver', MyDriverList.as_view(), name='driver-list'),
+    path('api/driver/', MyDriverList.as_view(), name='driver-list'),
 
     path('api/driver_location', Driverlocation.as_view(), name= 'driver-locationupdate'),
-
 
     # path('api/driver/<int:id>/', MyDriverGetList.as_view(), name='driver-list-id'),
 
