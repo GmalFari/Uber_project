@@ -19,9 +19,9 @@ SECRET_KEY = "django-insecure-q&qhlk_^z#n5nqmymkrezl(2c7unn3qw_g7ok(+!w#6gnzq7ab
 DEBUG = True
 
 ALLOWED_HOSTS = []
+AUTH_USER_MODEL='authentication.Newuser'
 
 
-#AUTH_USER_MODEL = 'authentication.NewUser'
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,9 +41,9 @@ INSTALLED_APPS = [
     "client_management",
     "enquiry",
     "django_filters",
-    #"authentication",
-    "fcm_django",
-    "rest_framework.authtoken",
+    "authentication",
+    #"fcm_django",
+    #"rest_framework.authtoken",
    
    
 ]

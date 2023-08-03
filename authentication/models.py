@@ -18,7 +18,7 @@ class CustomAccountManager(BaseUserManager):
 
     def create_superuser(self, email, user_name, first_name, password, **other_fields):
         other_fields.setdefault('is_staff', True)
-        other_fields.setdefault('is_superuser', False)
+        other_fields.setdefault('is_superuser', True)
         other_fields.setdefault('is_user', True)
 
         if other_fields.get('is_staff') is not True:
@@ -30,21 +30,21 @@ class CustomAccountManager(BaseUserManager):
 
 # 2. Creating Custom User Model
 class Newuser(AbstractBaseUser, PermissionsMixin):
-    phone = models.BigIntegerField(unique=True)
+    phone = models.BigIntegerField(null=True, blank=True)
     user_name = models.CharField(max_length=150, )
     first_name = models.CharField(max_length=150)
     start_date = models.DateTimeField(default=timezone.now)
-    email= models.EmailField()
+    email= models.EmailField(unique=True)
     
     is_staff = models.BooleanField(default=False)
     is_user = models.BooleanField(default=True)
 
     objects = CustomAccountManager()
 
-    USERNAME_FIELD = 'phone'
+    USERNAME_FIELD = 'email'
 
     # required for superuser
-    REQUIRED_FIELDS = ['user_name','first_name','email']
+    REQUIRED_FIELDS = ['user_name','first_name']
 
     def __str__(self):
-        return str(self.phone)
+        return self.user_name

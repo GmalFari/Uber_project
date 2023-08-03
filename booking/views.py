@@ -41,7 +41,7 @@ class Userlogin(APIView):
         mobile_number=request.data['mobile_number']
         
       
-        if userregistration.objects.filter(full_name=full_name, mobile_number=mobile_number).exists():
+        if bookinguser.objects.filter(full_name=full_name, mobile_number=mobile_number).exists():
             return Response ({
                 'msg':'user can book driver',
                 'status':status.HTTP_200_OK
@@ -54,16 +54,12 @@ class Userlogin(APIView):
         
 
 class MyBookingList(APIView):
-    authentication_classes=[BasicAuthentication]
+    # authentication_classes=[BasicAuthentication]
     permission_classes=[IsAuthenticated]
     def post(self, request, format=None):
         data=request.data
-        user=request.user
-
-        # user = request.user.clientregistration
-        # data['client_name'] = user.id
-        
-        serializer=MyBookingSerializer(data=data)
+        user = request.user
+        serializer=PlacebookingSerializer(data=data)
         if serializer.is_valid():
                 serializer.save()
                 print(serializer.data)
@@ -98,22 +94,22 @@ class MyBookingList(APIView):
 
     def get(self, request):
         booking=PlaceBooking.objects.all()
-        authentication_classes=[SessionAuthentication]
-        serializer = MyBookingSerializer(booking, many=True)
+        #authentication_classes=[SessionAuthentication]
+        serializer = PlacebookingSerializer(booking, many=True)
         return Response(serializer.data)
 
 
 class BookingListWithId(APIView):
     def get(self, request, id):
         booking = PlaceBooking.objects.get(id=id)
-        serializer = MyBookingSerializer(booking)
+        serializer = PlacebookingSerializer(booking)
         return Response(serializer.data)
     
-    serializer_class = MyBookingSerializer
+    serializer_class = PlacebookingSerializer
 
     def put(self, request, id):
         booking = PlaceBooking.objects.get(id=id)
-        serializer = MyBookingSerializer(booking, data=request.data, partial=True)
+        serializer = PlacebookingSerializer(booking, data=request.data, partial=True)
         if serializer.is_valid:
             serializer.save()
             return Response(request.data)

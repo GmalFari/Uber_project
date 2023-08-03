@@ -3,7 +3,7 @@ from .models import  *
 from driver_management.models import AddDriver
 from user_master.models import Zone
 from .models import bookinguser
-#from authentication.models import User
+from authentication.models import Newuser
 
 
 class ClientregistrationSerializer(serializers.ModelSerializer):
@@ -13,13 +13,13 @@ class ClientregistrationSerializer(serializers.ModelSerializer):
         fields = ['full_name', 'mobile_number', 'city', 'address']
 
         
-class MyBookingSerializer(serializers.ModelSerializer):
-    client_name = serializers.PrimaryKeyRelatedField(queryset=bookinguser.objects.all())
+class PlacebookingSerializer(serializers.ModelSerializer):
+    client_name= serializers.SerializerMethodField()
     class Meta:
         model = PlaceBooking
-        fields = ['client_name','trip_type', 'from_date','to_date','car_type', 'gear_type', 'pickup_location', 'drop_location', 'booking_time']
-        # exclude=['client_name']
-
+        fields = ['client_name','trip_type', 'from_date', 'to_date', 'car_type', 'gear_type', 'pickup_location', 'drop_location', 'booking_time']
+    def get_client_name(self, obj):
+        return obj.client_name
 
 
 
