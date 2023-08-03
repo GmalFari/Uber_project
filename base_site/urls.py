@@ -5,7 +5,7 @@ from django.urls import path, include
 from rest_framework_swagger.views import get_swagger_view
 # from driver_management.views import MyModelList, DriverDetailsView
 from enquiry.views import MyEnquiryList, MyEnquiryDelete, MyEnquiryUpdate, MyEnquiryGetList
-from booking.views import MyBookingList
+
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from user_master.views import home
 

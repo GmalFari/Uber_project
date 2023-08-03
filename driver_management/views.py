@@ -11,6 +11,7 @@ from rest_framework import filters
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate, login
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 
@@ -62,7 +63,6 @@ class MyDriverList(generics.ListCreateAPIView):
     parser_classes = [MultiPartParser, FormParser]
 
 
-
         
 # class MyDriverGetList(APIView):
 #     def get(self, request, id):
@@ -96,16 +96,17 @@ class MyDriverList(generics.ListCreateAPIView):
 #             return Response({'error': 'Driver not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
-# class Driversearch(ListAPIView):
-#     try:
-#         queryset = AddDriver.objects.all()
-#         serializer_class = MyDriverSerializer
-#         #
-#         filter_backends = [DjangoFilterBackend]
+class Driversearch(ListAPIView):
+    try:
+        queryset = AddDriver.objects.all()
+        
+        serializer_class = MyDriverSerializer
+        print('search', serializer_class)
+        filter_backends = [DjangoFilterBackend]
 
-#         filterset_fields = ['driver_type', 'first_name', 'driver_status', 'branch']
-#     except AddDriver.DoesNotExist:
-#         pass
+        filterset_fields = ['driver_type', 'first_name', 'driver_status', 'branch']
+    except AddDriver.DoesNotExist:
+        pass
 
 
 
