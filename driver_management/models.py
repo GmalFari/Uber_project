@@ -162,7 +162,7 @@ class DriverBalance(models.Model):
 
 
 class Driverlocation(models.Model):
-    driver= models.ForeignKey(AddDriver, on_delete=models.CASCADE)
+    driver= models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     driver_lat= models.DecimalField(max_digits=10, decimal_places=6, blank=True, null=True)
     driver_long= models.DecimalField(max_digits=10, decimal_places=6, blank=True, null=True)
 

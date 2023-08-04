@@ -3,7 +3,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from django.conf import settings
-from authentication.models import Newuser
+from authentication.models import User
 from client_management.models import AddClient
 # from driver_management.models import AddDriver
 from datetime import datetime, date
@@ -31,7 +31,7 @@ class bookinguser(models.Model):
     
   
 class PlaceBooking(models.Model):
-    client_name = models.ForeignKey(Newuser, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     trip_type=models.CharField(max_length=50, null=True ,blank=True)
     from_date = models.DateField()
     to_date = models.DateField()
@@ -50,8 +50,9 @@ class PlaceBooking(models.Model):
 def create_profile(sender, instance, created, **kwargs):
     
     if created:
-        # PlaceBooking.objects.create(instance)
-        print("data saved")
+        booking= PlaceBooking.objects.create(user=instance)
+        booking.save()
+        print(f"data saved:{booking}")
 
     
 

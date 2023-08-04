@@ -9,6 +9,7 @@ from .models import *
 from .serializers import *
 from driver_management.models import AddDriver
 from driver_management.serializers import *
+from authentication.models import  User
 
 # from geopy.geocoders import Nominatim
 # import geocoder
@@ -56,11 +57,16 @@ class Userlogin(APIView):
 class MyBookingList(APIView):
     # authentication_classes=[BasicAuthentication]
     permission_classes=[IsAuthenticated]
+
     def post(self, request, format=None):
-        data=request.data
-        user = request.user
+        data=request.data    
+        # user = User.objects.get(user=request.user)
+        user=request.user
+
         serializer=PlacebookingSerializer(data=data)
+        
         if serializer.is_valid():
+                serializer.validated_data['user_id'] = user.id
                 serializer.save()
                 print(serializer.data)
                 return Response(serializer.data, status=status.HTTP_201_CREATED)

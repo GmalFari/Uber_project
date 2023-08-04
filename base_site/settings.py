@@ -19,13 +19,14 @@ SECRET_KEY = "django-insecure-q&qhlk_^z#n5nqmymkrezl(2c7unn3qw_g7ok(+!w#6gnzq7ab
 DEBUG = True
 
 ALLOWED_HOSTS = []
-AUTH_USER_MODEL='authentication.Newuser'
+AUTH_USER_MODEL='authentication.User'
 
 
 # Application definition
 
 INSTALLED_APPS = [
     "jazzmin",
+    "authentication",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -41,7 +42,7 @@ INSTALLED_APPS = [
     "client_management",
     "enquiry",
     "django_filters",
-    "authentication",
+    
     #"fcm_django",
     #"rest_framework.authtoken",
    
@@ -96,7 +97,7 @@ environ.Env.read_env()
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
         "NAME": env('DATABASE_NAME'),
         'USER': env('DATABASE_USER'),
         'PASSWORD': env('DATABASE_PASSWORD'),

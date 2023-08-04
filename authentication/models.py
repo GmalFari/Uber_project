@@ -1,4 +1,6 @@
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from typing import Iterable, Optional
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager,AbstractUser
+from django.contrib.auth.hashers import make_password
 
 from django.db import models
 from django.utils import timezone
@@ -28,23 +30,33 @@ class CustomAccountManager(BaseUserManager):
                 'Superuser must be assigned to is_superuser=True.')
         return self.create_user(email, user_name, first_name, password, **other_fields)
 
-# 2. Creating Custom User Model
-class Newuser(AbstractBaseUser, PermissionsMixin):
-    phone = models.BigIntegerField(null=True, blank=True)
-    user_name = models.CharField(max_length=150, )
-    first_name = models.CharField(max_length=150)
-    start_date = models.DateTimeField(default=timezone.now)
-    email= models.EmailField(unique=True)
-    
-    is_staff = models.BooleanField(default=False)
-    is_user = models.BooleanField(default=True)
 
-    objects = CustomAccountManager()
+class User(AbstractUser):
+    user_type= (
+        ('Customer', 'Customer'),
+        ('Driver', 'Driver')
+    )
+    phone = models.BigIntegerField(unique=True)
+    usertype = models.CharField(choices=user_type, max_length=100, null=True, blank=True)
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'phone'
+    REQUIRED_FIELDS = ['user', 'username']
 
-    # required for superuser
-    REQUIRED_FIELDS = ['user_name','first_name']
+    db_table = "User"
+
+    # def save(self, *args, **kwargs): 
+    #      if self.password is not None:   
+    #          self.password = self.set_password(self.password)   
+    #          return super(User, self).save(*args,*kwargs)
 
     def __str__(self):
-        return self.user_name
+        return str(self.phone)
+    
+
+
+
+class registeruser(models.Model):
+    name = models.CharField(max_length=100, null=True, blank=True)
+
+
+    
