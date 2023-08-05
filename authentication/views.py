@@ -6,7 +6,7 @@ from .serializers import NewUserSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from django.http import HttpResponse
-#from django.contrib.auth.models import User
+
 
 # Create your views here.
 
@@ -21,7 +21,8 @@ class Adduser(APIView):
         
         return Response({'msg':'Error in sav data', 'data': serailizer.errors})
        
-    # def get(self, request):
-    #     all_user= User.objects.all()
-    #     serializer= UserSerializer(all_user, many=True)
-    #     return Response({'msg':'Here is your data', 'data':serializer.data}, status=status.HTTP_200_OK)
+    def get(self, request):
+        all_user= User.objects.all()
+        serializer= NewUserSerializer(all_user, many=True)
+        return Response({'msg':'Here is your data', 'data':serializer.data}, status=status.HTTP_200_OK)
+    

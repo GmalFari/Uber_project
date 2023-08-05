@@ -55,9 +55,8 @@ class Userlogin(APIView):
         
 
 class MyBookingList(APIView):
-    # authentication_classes=[BasicAuthentication]
+    authentication_classes=[BasicAuthentication]
     permission_classes=[IsAuthenticated]
-
     def post(self, request, format=None):
         data=request.data    
         # user = User.objects.get(user=request.user)
@@ -99,14 +98,18 @@ class MyBookingList(APIView):
         #     driver=driver.filter(transmission_type=transmission_type)
 
     def get(self, request):
+        permission_classes=[IsAuthenticated]
         booking=PlaceBooking.objects.all()
-        #authentication_classes=[SessionAuthentication]
         serializer = PlacebookingSerializer(booking, many=True)
         return Response(serializer.data)
+    
 
 
 class BookingListWithId(APIView):
-    def get(self, request, id):
+    authentication_classes=[BasicAuthentication]
+    permission_classes=[IsAuthenticated]
+    def get(self, request):
+        # user = User.objects.get(request.user)
         booking = PlaceBooking.objects.get(id=id)
         serializer = PlacebookingSerializer(booking)
         return Response(serializer.data)
