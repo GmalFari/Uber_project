@@ -99,9 +99,7 @@ class MyDriverList(generics.ListCreateAPIView):
 class Driversearch(ListAPIView):
     try:
         queryset = AddDriver.objects.all()
-        
         serializer_class = MyDriverSerializer
-        print('search', serializer_class)
         filter_backends = [DjangoFilterBackend]
 
         filterset_fields = ['driver_type', 'first_name', 'driver_status', 'branch']

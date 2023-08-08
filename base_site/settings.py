@@ -97,7 +97,7 @@ environ.Env.read_env()
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "ENGINE": "django.db.backends.postgresql",
         "NAME": env('DATABASE_NAME'),
         'USER': env('DATABASE_USER'),
         'PASSWORD': env('DATABASE_PASSWORD'),
@@ -105,8 +105,8 @@ DATABASES = {
         'PORT':env('DATABASE_PORT')
         # "NAME": "doh2",
         # 'USER': 'postgres',
-        # 'PASSWORD': '@Dmin123',
-        # 'HOST': 'localhost',
+        # 'PASSWORD': 'doh12345',
+        # 'HOST': 'doh.cdttjc11wcj1.ap-south-1.rds.amazonaws.com',
         # 'PORT':5432
     }
 }
