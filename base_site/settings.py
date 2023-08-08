@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     "enquiry",
     "django_filters",
     
-    #"fcm_django",
+    "fcm_django",
     #"rest_framework.authtoken",
    
    
