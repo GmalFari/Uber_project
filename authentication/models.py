@@ -19,7 +19,7 @@ class CustomAccountManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, user_name, first_name, password, **other_fields):
-        other_fields.setdefault('is_staff', True)
+        other_fields.setdefault('is_staff', False )
         other_fields.setdefault('is_superuser', True)
         other_fields.setdefault('is_user', True)
 
@@ -40,7 +40,7 @@ class User(AbstractUser):
     usertype = models.CharField(choices=user_type, max_length=100, null=True, blank=True)
 
     USERNAME_FIELD = 'phone'
-    REQUIRED_FIELDS = ['user', 'username']
+    REQUIRED_FIELDS = ['usertype', 'username']
 
     db_table = "User"
 
