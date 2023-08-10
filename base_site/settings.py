@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.gis",
     "rest_framework",
     'corsheaders',
     "drf_spectacular",
@@ -97,7 +98,7 @@ environ.Env.read_env()
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
+        "ENGINE": "django.contrib.gis.db.backends.postgis",
         "NAME": env('DATABASE_NAME'),
         'USER': env('DATABASE_USER'),
         'PASSWORD': env('DATABASE_PASSWORD'),
@@ -168,7 +169,7 @@ REST_FRAMEWORK = {
 #FIREBASE_APP = initialize_app()
 cred_path = os.path.join(BASE_DIR, "serviceaccountkey.json")
 cred = credentials.Certificate(cred_path)
-firebase_admin.initialize_app(cred)
+# firebase_admin.initialize_app(cred)
 FCM_DJANGO_SETTINGS = {
      # an instance of firebase_admin.App to be used as default for all fcm-django requests
      # default: None (the default Firebase app)
