@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import *
 from .serializers import *
+from .paginations import cutomepegination
 from rest_framework import status
 from rest_framework import filters
 # from django_filters.rest_framework import DjangoFilterBackend
@@ -98,6 +99,7 @@ class MyDriverList(generics.ListCreateAPIView):
 
 class Driversearch(ListAPIView):
     try:
+        pagination_class=cutomepegination
         queryset = AddDriver.objects.all()
         serializer_class = MyDriverSerializer
         filter_backends = [DjangoFilterBackend]
