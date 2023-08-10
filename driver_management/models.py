@@ -2,6 +2,7 @@ from django.db import models
 from datetime import date
 from user_master.models import State, City, Location, Branch, Zone
 from django.utils.html import mark_safe
+from django.contrib.gis.db.models import PointField
 # from django.contrib.auth.models import User
 # from authentication.models import *
 
@@ -163,8 +164,9 @@ class DriverBalance(models.Model):
 
 class Driverlocation(models.Model):
     driver= models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    driver_lat= models.DecimalField(max_digits=10, decimal_places=6, blank=True, null=True)
-    driver_long= models.DecimalField(max_digits=10, decimal_places=6, blank=True, null=True)
+    drive_location =PointField()
+    # driver_lat= models.DecimalField(max_digits=10, decimal_places=6, blank=True, null=True)
+    # driver_long= models.DecimalField(max_digits=10, decimal_places=6, blank=True, null=True)
 
     def __str__(self):
         return str(self.driver)
