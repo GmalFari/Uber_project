@@ -33,7 +33,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "django.contrib.gis",
+   # "django.contrib.gis",
     "rest_framework",
     'corsheaders',
     "drf_spectacular",
@@ -98,7 +98,7 @@ environ.Env.read_env()
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.contrib.gis.db.backends.postgis",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
         "NAME": env('DATABASE_NAME'),
         'USER': env('DATABASE_USER'),
         'PASSWORD': env('DATABASE_PASSWORD'),

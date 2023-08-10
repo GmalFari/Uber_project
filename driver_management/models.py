@@ -164,9 +164,9 @@ class DriverBalance(models.Model):
 
 class Driverlocation(models.Model):
     driver= models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    drive_location =PointField()
-    # driver_lat= models.DecimalField(max_digits=10, decimal_places=6, blank=True, null=True)
-    # driver_long= models.DecimalField(max_digits=10, decimal_places=6, blank=True, null=True)
+    #drive_location =PointField()
+    driver_lat= models.DecimalField(max_digits=10, decimal_places=6, blank=True, null=True)
+    driver_long= models.DecimalField(max_digits=10, decimal_places=6, blank=True, null=True)
 
     def __str__(self):
-        return str(self.driver)
+        return str(self.driver) 
