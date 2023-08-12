@@ -1,8 +1,9 @@
 from rest_framework import serializers
 from .models import  *
 from driver_management.models import AddDriver
+from driver_management.serializers import MyDriverSerializer
 from user_master.models import Zone
-from .models import bookinguser
+from .models import bookinguser, Invoice
 #from authentication.models import User
 from authentication.serializers import NewUserSerializer
 from authentication.models import  User
@@ -36,3 +37,14 @@ class DriverSerializer(serializers.ModelSerializer):
     class Meta:
         model = AddDriver
         fields = '__all__'
+
+class InvoiceSerializer(serializers.ModelSerializer):
+    driver =  serializers.SerializerMethodField()
+    class Meta:
+        model = Invoice
+        fields = ('user', 'driver', 'add_favourite', 'invoice_generate')
+    
+    def get_driver(self, obj):
+        driver =  obj.driver
+        driver_seri = MyDriverSerializer(driver)
+        return driver_seri.data

@@ -12,4 +12,6 @@ urlpatterns=[
     path('userbooking/', views.BookingListWithId.as_view(), name='booking-id'),
 
     path('search_drivers/', views.SearchDriverWithinRadius.as_view(), name='search_drivers'),
+
+    path('invoce/', views.InvoiceGenerate.as_view(), name='invoice'),
 ]

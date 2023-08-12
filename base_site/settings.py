@@ -33,7 +33,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-   # "django.contrib.gis",
+    "django.contrib.gis",
+    "location_field.apps.DefaultConfig",
     "rest_framework",
     'corsheaders',
     "drf_spectacular",
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     "django_filters",
     
     "fcm_django",
+    
     #"rest_framework.authtoken",
    
    
@@ -98,7 +100,7 @@ environ.Env.read_env()
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "ENGINE": "django.contrib.gis.db.backends.postgis",
         "NAME": env('DATABASE_NAME'),
         'USER': env('DATABASE_USER'),
         'PASSWORD': env('DATABASE_PASSWORD'),
@@ -149,7 +151,7 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-#STATICFILES_DIRS=[os.path.join(BASE_DIR, 'dohfrontend/build/static')]
+STATICFILES_DIRS=[os.path.join(BASE_DIR, 'dohfrontend/build/static')]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -3,3 +3,4 @@ from .models import *
 
 admin.site.register(bookinguser)
 admin.site.register(PlaceBooking)
+admin.site.register(Invoice)
