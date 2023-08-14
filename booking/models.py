@@ -6,9 +6,9 @@ from django.conf import settings
 from authentication.models import User
 from client_management.models import AddClient
 from driver_management.models import AddDriver
-from datetime import datetime, date
-from django.utils import timezone 
-# from dateutil.parser import parse
+
+ 
+
 
 class bookinguser(models.Model):
     cities=(
@@ -56,28 +56,28 @@ def create_profile(sender, instance, created, **kwargs):
 
 
 
-# def invoice_number():
-#     number=000
-#     for i in range(number):
-#         inv += f"BK{i}"
-#         print(inv)
-#     return number
 
 class Invoice(models.Model):
-    invoicenumber =  models.IntegerField(null=True, blank=True)
     user =  models.ForeignKey(bookinguser, on_delete=models.CASCADE)
     driver = models.ForeignKey(AddDriver, on_delete=models.CASCADE)
+    placebooking = models.ForeignKey(PlaceBooking, on_delete=models.CASCADE)
     add_favourite = models.BooleanField(default=False)
     invoice_generate =  models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.user.full_name
 
-    # def save(self, invoicenumber, *args, **kwargs):
-    #     if invoicenumber == 000:
-    #         number = self.invoicenumber + 1
-    #         super(Invoice, number).save(*args, **kwargs)
+    
 
+class Feedback(models.Model):
+    user =  models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    rating =  models.IntegerField()
+    descriptions = models.CharField(max_length=300, null=True, blank=True)
+    ratingdate = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.rating)
+    
 
 
 

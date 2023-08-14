@@ -221,5 +221,23 @@ class InvoiceGenerate(APIView):
         
         except Invoice.DoesNotExist:
             raise serializers.ValidationError("No Data Found")
+        
+class FeedbackApi(APIView):
+    authentication_classes=[BasicAuthentication]
+    permission_classes=[IsAuthenticated]
+    def post(self, request):
+        data = request.data
+        FeedBack_seri= Feedbackserializer(data=data)
+        if FeedBack_seri.is_valid():
+            FeedBack_seri.save()
+            return Response({'msg': 'Thanks for the feedback', 'data':FeedBack_seri.data}, status=status.HTTP_201_CREATED)
+        else:
+             return Response({'msg': 'Unable to generate', 'data':FeedBack_seri.error}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
             
-    
+    authentication_classes=[BasicAuthentication]
+    permission_classes=[IsAuthenticated]
+    def get(self, request):
+        get_feedback = Feedback.objects.all()
+        serializer = Feedbackserializer(get_feedback, many=True)
+        return Response({'msg': 'All feedback list', 'data':serializer.data}, status=status.HTTP_201_CREATED)

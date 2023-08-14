@@ -14,4 +14,6 @@ urlpatterns=[
     path('search_drivers/', views.SearchDriverWithinRadius.as_view(), name='search_drivers'),
 
     path('invoce/', views.InvoiceGenerate.as_view(), name='invoice'),
+
+    path('UserFeedback/', views.FeedbackApi.as_view(), name='UserFeedback'),
 ]
