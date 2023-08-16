@@ -16,11 +16,11 @@ class Driverlocationserializer(serializers.ModelSerializer):
         fields= '__all__'
 
 class MyDriverSerializer(serializers.ModelSerializer):
-   
     class Meta:
         model = AddDriver
         fields = '__all__'
-
+    
+    
 
 
     

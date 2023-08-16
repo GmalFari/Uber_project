@@ -41,7 +41,7 @@ class LoginView(APIView):
         user = authenticate(phone=phone, password=password)
         if user is not None:
             login(request, user)
-            #token, created = Token.objects.get_or_create(user=user)
+            token = Token.objects.get_or_create(user=user)
             return Response({"msg":" Welcome Customer", 'data':"serializer.data"}, status=status.HTTP_200_OK)
                 
                 # 

@@ -13,6 +13,8 @@ from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate, login
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import BasicAuthentication
 
 
 
@@ -65,6 +67,58 @@ class MyDriverList(generics.ListCreateAPIView):
 
 
         
+
+
+
+class Driversearch(ListAPIView):
+    try:
+        pagination_class=cutomepegination
+        queryset = AddDriver.objects.all()
+        serializer_class = MyDriverSerializer
+        filter_backends = [DjangoFilterBackend]
+
+        filterset_fields = ['driver_type', 'first_name', 'driver_status', 'branch']
+    except AddDriver.DoesNotExist:
+        pass
+
+
+# Driver profile
+class Driverprofile(APIView):
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        try:
+            driver = AddDriver.objects.get(driver_user=request.user)
+            serializer = MyDriverSerializer(driver)
+            return Response({'msg': 'Here is your profile', 'data':serializer.data})
+        
+        except AddDriver.DoesNotExist:
+            return Response({'msg': 'No profile was found'})    
+
+
+
+# Driver Leave API
+class Driverleaveapi(APIView):
+    def post(self, request):
+        data=request.data
+        serializer=DriverleaveSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'msg':'Driver Leave save'}, status=status.HTTP_201_CREATED)
+        else:
+            return Response({'msg':'may be you missed some field'}, status=status.HTTP_400_BAD_REQUEST) 
+
+
+
+
+
+
+
+
+
+
+
+
 # class MyDriverGetList(APIView):
 #     def get(self, request, id):
 #         try:
@@ -95,42 +149,3 @@ class MyDriverList(generics.ListCreateAPIView):
 #             return Response({'message': 'Object Deleted'}, status=status.HTTP_204_NO_CONTENT)
 #         except AddDriver.DoesNotExist:
 #             return Response({'error': 'Driver not found'}, status=status.HTTP_404_NOT_FOUND)
-
-
-class Driversearch(ListAPIView):
-    try:
-        pagination_class=cutomepegination
-        queryset = AddDriver.objects.all()
-        serializer_class = MyDriverSerializer
-        filter_backends = [DjangoFilterBackend]
-
-        filterset_fields = ['driver_type', 'first_name', 'driver_status', 'branch']
-    except AddDriver.DoesNotExist:
-        pass
-
-
-# Driver profile
-class Driverprofile(APIView):
-    def get(self, request):
-        pass
-
-
-
-# Driver Leave API
-class Driverleaveapi(APIView):
-    def post(self, request):
-        data=request.data
-        serializer=DriverleaveSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({'msg':'Driver Leave save'}, status=status.HTTP_201_CREATED)
-        else:
-            return Response({'msg':'may be you missed some field'}, status=status.HTTP_400_BAD_REQUEST) 
-
-
-
-
-
-
-
-
