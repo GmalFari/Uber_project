@@ -109,9 +109,14 @@ class Driversearch(ListAPIView):
         pass
 
 
+# Driver profile
+class Driverprofile(APIView):
+    def get(self, request):
+        pass
+
+
 
 # Driver Leave API
-
 class Driverleaveapi(APIView):
     def post(self, request):
         data=request.data

@@ -7,6 +7,7 @@ from . import views
 
 urlpatterns = [
     path('adduser/', views.Adduser.as_view(), name='adduser'),
+    path('login/',views.LoginView.as_view(), name="login")
     # path('auth/token/create/', TokenCreateView.as_view(), name='token_create'),
     # path('auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     # path('auth/token/destroy/', TokenDestroyView.as_view(), name='token_destroy'),
