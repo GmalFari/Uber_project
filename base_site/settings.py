@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.gis",
-    "location_field.apps.DefaultConfig",
+    #"location_field.apps.DefaultConfig",
     "rest_framework",
     'corsheaders',
     "drf_spectacular",
@@ -105,7 +105,7 @@ DATABASES = {
         'USER': env('DATABASE_USER'),
         'PASSWORD': env('DATABASE_PASSWORD'),
         'HOST': env('DATABASE_HOST'),
-        'PORT':env('DATABASE_PORT')
+        'PORT':env('DATABASE_PORT'),
         # "NAME": "doh2",
         # 'USER': 'postgres',
         # 'PASSWORD': 'doh12345',
