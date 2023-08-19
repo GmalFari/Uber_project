@@ -22,7 +22,7 @@ class AddDriver(models.Model):
                          f'width = "100" height = "100" style = "border-radius: 50%"/>')
 
     # General Details
-    driver_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    #driver_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=20, default=None)
     middle_name = models.CharField(max_length=20, blank=True, null=True)
     last_name = models.CharField(max_length=20, blank=True, null=True)
