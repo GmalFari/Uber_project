@@ -109,7 +109,7 @@ DATABASES = {
         # "NAME": "doh2",
         # 'USER': 'postgres',
         # 'PASSWORD': 'doh12345',
-        # 'HOST': 'doh.cdttjc11wcj1.ap-south-1.rds.amazonaws.com',
+        # 'HOST': 'doh2.cz1w19zdjwjh.us-east-2.rds.amazonaws.com',
         # 'PORT':5432
     }
 }
@@ -163,8 +163,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ],
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    # 'PAGE_SIZE': 10
 }
 
 #Setup for push notification with firebase
