@@ -19,8 +19,6 @@ class MyDriverSerializer(serializers.ModelSerializer):
     class Meta:
         model = AddDriver
         fields = '__all__'
-    
-    
 
 
     

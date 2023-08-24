@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     
     "fcm_django",
     
-    #"rest_framework.authtoken",
+    "rest_framework.authtoken",
    
    
 ]
@@ -192,6 +192,12 @@ FCM_DJANGO_SETTINGS = {
      # default: False
     "DELETE_INACTIVE_DEVICES": True,
 }
+
+# PUSH_NOTIFICATIONS_SETTINGS = {
+#         "FCM_API_KEY": "[your api key]",
+#         "GCM_API_KEY": "[your api key]",
+#         "APNS_CERTIFICATE": "/path/to/your/certificate.pem",
+# }
 
 
 CSRF_COOKIE_NAME = "csrftoken"

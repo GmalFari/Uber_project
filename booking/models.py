@@ -1,7 +1,7 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
+from django.contrib.gis.db import models as gis_point
 from django.conf import settings
 from authentication.models import User
 from client_management.models import AddClient
@@ -35,6 +35,7 @@ class PlaceBooking(models.Model):
     trip_type=models.CharField(max_length=50, null=True ,blank=True)
     from_date = models.DateField()
     to_date = models.DateField()
+    currunt_location = gis_point.PointField(srid=453, null=True, blank=True)
     car_type=models.CharField(max_length=100, null=True)
     gear_type= models.CharField(max_length=100, null=True)
     pickup_location=models.CharField(max_length=100, null=True)
