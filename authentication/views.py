@@ -36,15 +36,13 @@ class LoginView(APIView):
         phone = request.data.get('phone')
         password = request.data.get('password')
        
-        currunt_user = request.user
            
         user = authenticate(phone=phone, password=password)
         if user is not None:
             login(request, user)
-            #token = Token.objects.get_or_create(user=user)
-            return Response({"msg":" Welcome Customer", 'data':"serializer.data"}, status=status.HTTP_200_OK)
-                
-                # 
+            token,created = Token.objects.get_or_create(user=user)
+            print(token)
+            return Response({"msg":" Welcome Customer", 'data':"serializer.data", 'token':token}, status=status.HTTP_200_OK)
                 
         else:
             return Response({"msg":" unable to login", 'data':"serializer.errors"}, status=status.HTTP_401_UNAUTHORIZED)

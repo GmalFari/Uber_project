@@ -22,10 +22,6 @@ class PlacebookingSerializer(serializers.ModelSerializer):
         
         fields= ['user','trip_type', 'from_date', 'to_date', 'car_type', 'gear_type', 'pickup_location', 'drop_location', 'booking_time']
 
-        # def save(self, **kwargs):
-        #     user = self.context['request'].user
-        #     self.instance.user = user
-        #     return super().save(**kwargs)
 
     user= serializers.SerializerMethodField()
     def get_user(self, obj):

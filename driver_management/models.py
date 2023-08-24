@@ -4,13 +4,7 @@ from user_master.models import State, City, Location, Branch, Zone
 from django.utils.html import mark_safe
 
 from django.contrib.gis.db import models as gis_point
-
-
-
-
-
-# from django.contrib.auth.models import User
-# from authentication.models import *
+from user_master.models import region
 
 from django.conf import settings
 
@@ -30,7 +24,8 @@ class AddDriver(models.Model):
     date_of_birth = models.DateField()
     mobile = models.CharField(max_length=15)
     alt_mobile = models.CharField(max_length=15, blank=True, null=True)
-    email = models.EmailField()
+    email = models.EmailField(default="info@driveronhire.com")
+    
     marital_status = models.CharField(choices=(('Married', 'Married'), ('Single', 'Single')),
                                       max_length=10)
     religion = models.CharField(choices=(('Hindu', 'Hindu'), ('Muslim', 'Muslim'),
@@ -42,11 +37,12 @@ class AddDriver(models.Model):
                                      ('UP', 'UP'), ('Bihari', 'Bihari'), ('Other', 'Other')),
                             max_length=20,
                             default='MA')
+    region = models.ForeignKey(region, on_delete=models.CASCADE)
     qualification = models.CharField(choices=(('5', '5th'), ('6', '6th'), ('7', '7th'),
                                               ('8', '8th'), ('9', '9th'), ('SSC', 'SSC'), ('HSC', 'HSC'),
                                               ('BC', 'BCOM'), ('BS', 'BSc'), ('BE', 'BE'), ('BA', 'BA')),
                                      default="SS", max_length=10)
-    driver_type = models.CharField(choices=(('Temporary', 'Temporary'), ('Permanent', 'Permanent')), default="Temporary", max_length=10)
+    driver_type = models.CharField(choices=(('parttime', 'parttime'), ('FullTime', 'FullTime')), default="Temporary", max_length=10)
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE, null=True,blank=True)
     zone = models.ForeignKey(Zone, on_delete=models.CASCADE, null=True,blank=True)
     language = models.CharField(choices=(('Hindi', 'Hindi'), ('English', 'English'), ('Bhojpuri', 'Bhojpuri')), default="Hindi", max_length=10)
@@ -98,6 +94,7 @@ class AddDriver(models.Model):
     aadhar_card = models.FileField(upload_to='documents/%Y/%m/', default=None, null=True, blank=True)
     home_agreement = models.FileField(upload_to='documents/%Y/%m/', default=None, null=True, blank=True)
     affidavit = models.FileField(upload_to='documents/%Y/%m/', default=None, null=True, blank=True)
+    pcc_certificate = models.FileField(upload_to='documents/%Y/%m/', default=None, null=True, blank=True)
 
     # Previous Employment details
     company_name = models.CharField(max_length=30)
@@ -171,10 +168,9 @@ class DriverBalance(models.Model):
 
 class Driverlocation(models.Model):
     driver= models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    location_point = gis_point.PointField()
-    #location =  PlainLocationField()
-    # driver_lat= models.DecimalField(max_digits=10, decimal_places=6, blank=True, null=True)
-    # driver_long= models.DecimalField(max_digits=10, decimal_places=6, blank=True, null=True)
+    driverlocation = gis_point.PointField(
+        "Location in Map", geography=True, blank=True, null=True,
+        srid=4326, help_text="Point(longitude latitude)")
 
     def __str__(self):
         return str(self.driver) 

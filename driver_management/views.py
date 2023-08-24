@@ -47,10 +47,8 @@ class Driverlogin(APIView):
         return Response({'msg': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
  # for Driver location update   
-class Driverlocation(APIView):  
+class driverlocation(APIView):  
     def post(self, request):
-        
-       
         user=request.user
         serializer= Driverlocationserializer(data=request.data)
         if serializer.is_valid():
@@ -58,6 +56,18 @@ class Driverlocation(APIView):
             return Response({'msg':'location is update', 'data':serializer.data}, status=status.HTTP_201_CREATED)
         else:
             return Response({'msg':'unable to update', 'data':serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+        
+    def get(self, request):
+        try:
+
+            alllocation = Driverlocation.objects.all()
+            loc_seri =Driverlocationserializer(alllocation, many=True)
+            return Response({'msg': 'All Location List', 'data':loc_seri.data}, status=status.HTTP_200_OK)
+        
+        except Driverlocation.DoesNotExist:
+            return Response({'msg':'No driver location avalaible', 'data':loc_seri.errors}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    
 
 class MyDriverList(generics.ListCreateAPIView):
      
@@ -94,8 +104,7 @@ class Driverprofile(APIView):
         
         except AddDriver.DoesNotExist:
             return Response({'msg': 'No profile was found'})    
-
-
+        
 
 # Driver Leave API
 class Driverleaveapi(APIView):
