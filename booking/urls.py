@@ -9,7 +9,7 @@ urlpatterns=[
 
     path('booking/', views.MyBookingList.as_view(), name='booking'),
 
-    path('userbooking/', views.BookingListWithId.as_view(), name='booking-id'),
+    path('userbooking/<int:id>/', views.BookingListWithId.as_view(), name='booking-id'),
 
     path('search_drivers/', views.SearchDriverWithinRadius.as_view(), name='search_drivers'),
 

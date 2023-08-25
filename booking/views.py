@@ -58,9 +58,9 @@ class MyBookingList(APIView):
     # authentication_classes=[BasicAuthentication]
     authentication_classes=[TokenAuthentication]
     permission_classes=[IsAuthenticated]
-    def post(self, request, format=None):
-        data=request.data    
+    def post(self, request, format=None): 
         user=request.user
+        data=request.data
 
         serializer=PlacebookingSerializer(data=data)
        
