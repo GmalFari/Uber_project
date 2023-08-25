@@ -24,6 +24,7 @@ urlpatterns = [
     path('coupon/<int:id>/', MyCouponGetList.as_view(), name='coupon-list-id'),
     path('subscription/', MySubscriptionList.as_view(), name='subscription_list'),
     path('subscription/<int:id>/', MySubscriptionGetList.as_view(), name='subscription-list-id'),
+    path('region/', Regionapi.as_view(), name='region'),
 
     # URL for User
     path('createuser/', createUsermaster.as_view(), name='createuser'),
