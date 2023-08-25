@@ -134,6 +134,7 @@ class MyBookingList(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes=[IsAuthenticated]
     def get(self, request):
+        user = request.user.id
         booking=PlaceBooking.objects.all()
         serializer = PlacebookingSerializer(booking, many=True)
         return Response(serializer.data)
@@ -141,9 +142,9 @@ class MyBookingList(APIView):
 
 
 class BookingListWithId(APIView):
-    authentication_classes=[BasicAuthentication]
+    authentication_classes=[TokenAuthentication]
     permission_classes=[IsAuthenticated]
-    def get(self, request):
+    def get(self, request, id):
         # user = User.objects.get(request.user)
         booking = PlaceBooking.objects.get(id=id)
         serializer = PlacebookingSerializer(booking)
