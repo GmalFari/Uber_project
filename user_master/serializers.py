@@ -80,5 +80,5 @@ class UsermasterSerializer(serializers.ModelSerializer):
 class Regionserializer(serializers.ModelSerializer):
     class Meta:
         model = region
-        fileds = '__all__'
+        fields = '__all__'
 
