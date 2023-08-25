@@ -48,7 +48,7 @@ class PlaceBooking(models.Model):
     
 
 # @receiver(post_save, sender=PlaceBooking)
-# def create_profile(sender, instance, created, **kwargs):
+# def create_booking(sender, instance, created, **kwargs):
     
 #     if created:
 #         booking= PlaceBooking.objects.create(user=instance)
