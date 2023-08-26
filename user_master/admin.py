@@ -225,3 +225,4 @@ class Subscription(admin.ModelAdmin):
         formfield.widget.can_view_related = False
         return formfield
 
+admin.site.register(region)

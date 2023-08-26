@@ -1,14 +1,14 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
+from django.contrib.gis.db import models as gis_point
 from django.conf import settings
-#from authentication.models import Newuser
+from authentication.models import User
 from client_management.models import AddClient
-# from driver_management.models import AddDriver
-from datetime import datetime, date
-from django.utils import timezone 
-# from dateutil.parser import parse
+from driver_management.models import AddDriver
+
+ 
+
 
 class bookinguser(models.Model):
     cities=(
@@ -31,10 +31,11 @@ class bookinguser(models.Model):
     
   
 class PlaceBooking(models.Model):
-    client_name = models.ForeignKey(bookinguser, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     trip_type=models.CharField(max_length=50, null=True ,blank=True)
     from_date = models.DateField()
     to_date = models.DateField()
+    currunt_location = gis_point.PointField(srid=453, null=True, blank=True)
     car_type=models.CharField(max_length=100, null=True)
     gear_type= models.CharField(max_length=100, null=True)
     pickup_location=models.CharField(max_length=100, null=True)
@@ -50,10 +51,37 @@ class PlaceBooking(models.Model):
 def create_profile(sender, instance, created, **kwargs):
     
     if created:
-        # PlaceBooking.objects.create(instance)
-        print("data saved")
+        booking= PlaceBooking.objects.create(user=instance)
+        booking.save()
+        print(f"data saved:{booking}")
+
+
+
+
+class Invoice(models.Model):
+    user =  models.ForeignKey(bookinguser, on_delete=models.CASCADE)
+    driver = models.ForeignKey(AddDriver, on_delete=models.CASCADE)
+    placebooking = models.ForeignKey(PlaceBooking, on_delete=models.CASCADE)
+    add_favourite = models.BooleanField(default=False)
+    invoice_generate =  models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.full_name
 
     
+
+class Feedback(models.Model):
+    user =  models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    rating =  models.IntegerField()
+    descriptions = models.CharField(max_length=300, null=True, blank=True)
+    ratingdate = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.rating)
+    
+
+
+
 
 
 

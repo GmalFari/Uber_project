@@ -242,3 +242,11 @@ class Subscription(models.Model):
 
     def __str__(self):
         return self.scheme_type
+    
+
+class region(models.Model):
+    region_name = models.CharField(max_length=200, null=True, blank=True)
+
+    def __str__(self):
+        return self.region_name
+    
