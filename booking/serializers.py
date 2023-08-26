@@ -4,7 +4,7 @@ from driver_management.models import AddDriver
 from driver_management.serializers import MyDriverSerializer
 from user_master.models import Zone
 from .models import bookinguser, Invoice
-#from authentication.models import User
+from authentication.serializers import NewUserSerializer
 
 from authentication.models import  User
 
@@ -16,16 +16,17 @@ class ClientregistrationSerializer(serializers.ModelSerializer):
 
         
 class PlacebookingSerializer(serializers.ModelSerializer):
-    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=False, read_only=False)
+    #user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=False, read_only=False)
+    user = NewUserSerializer()
     class Meta:
         model = PlaceBooking
         
-        fields= ['user','trip_type', 'from_date', 'to_date', 'car_type', 'gear_type', 'pickup_location', 'drop_location', 'booking_time']
+        fields= ['id','user','trip_type', 'from_date', 'to_date', 'car_type', 'gear_type', 'pickup_location', 'drop_location', 'booking_time', 'currunt_location']
 
 
     user= serializers.SerializerMethodField()
     def get_user(self, obj):
-        return obj.user.username
+        return obj.user.phone
 
 
 
@@ -65,5 +66,12 @@ class Feedbackserializer(serializers.ModelSerializer):
         model =  Feedback
         fields = "__all__"
     
+
+class Profileserializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = "__all__"
+
+
    
 

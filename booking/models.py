@@ -31,7 +31,7 @@ class bookinguser(models.Model):
     
   
 class PlaceBooking(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
     trip_type=models.CharField(max_length=50, null=True ,blank=True)
     from_date = models.DateField()
     to_date = models.DateField()
@@ -47,13 +47,13 @@ class PlaceBooking(models.Model):
         return self.trip_type
     
 
-@receiver(post_save, sender=PlaceBooking)
-def create_profile(sender, instance, created, **kwargs):
+# @receiver(post_save, sender=PlaceBooking)
+# def create_booking(sender, instance, created, **kwargs):
     
-    if created:
-        booking= PlaceBooking.objects.create(user=instance)
-        booking.save()
-        print(f"data saved:{booking}")
+#     if created:
+#         booking= PlaceBooking.objects.create(user=instance)
+#         booking.save()
+#         print(f"data saved:{booking}")
 
 
 
@@ -78,6 +78,18 @@ class Feedback(models.Model):
 
     def __str__(self):
         return str(self.rating)
+    
+
+"""This model for user Profile"""
+class Profile(models.Model):
+    user= models.ForeignKey(User, on_delete=models.CASCADE)
+    userlocation= gis_point.PointField(
+        "Location in Map", geography=True, blank=True, null=True,
+        srid=4326, help_text="Point(longitude latitude)")
+    
+    def __str__(self):
+        return str(self.user.phone)
+    
     
 
 

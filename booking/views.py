@@ -58,9 +58,9 @@ class MyBookingList(APIView):
     # authentication_classes=[BasicAuthentication]
     authentication_classes=[TokenAuthentication]
     permission_classes=[IsAuthenticated]
-    def post(self, request, format=None):
-        data=request.data    
+    def post(self, request, format=None): 
         user=request.user
+        data=request.data
 
         serializer=PlacebookingSerializer(data=data)
        
@@ -134,6 +134,7 @@ class MyBookingList(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes=[IsAuthenticated]
     def get(self, request):
+        user = request.user.id
         booking=PlaceBooking.objects.all()
         serializer = PlacebookingSerializer(booking, many=True)
         return Response(serializer.data)
@@ -141,9 +142,9 @@ class MyBookingList(APIView):
 
 
 class BookingListWithId(APIView):
-    authentication_classes=[BasicAuthentication]
+    authentication_classes=[TokenAuthentication]
     permission_classes=[IsAuthenticated]
-    def get(self, request):
+    def get(self, request, id):
         # user = User.objects.get(request.user)
         booking = PlaceBooking.objects.get(id=id)
         serializer = PlacebookingSerializer(booking)
@@ -154,7 +155,7 @@ class BookingListWithId(APIView):
     def put(self, request, id):
         booking = PlaceBooking.objects.get(id=id)
         serializer = PlacebookingSerializer(booking, data=request.data, partial=True)
-        if serializer.is_valid:
+        if serializer.is_valid():
             serializer.save()
             return Response(request.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
@@ -242,3 +243,25 @@ class FeedbackApi(APIView):
         get_feedback = Feedback.objects.all()
         serializer = Feedbackserializer(get_feedback, many=True)
         return Response({'msg': 'All feedback list', 'data':serializer.data}, status=status.HTTP_201_CREATED)
+
+
+
+class userprofile(APIView):  
+    def post(self, request):
+        user=request.user
+        serializer= Profileserializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'msg':'Profile is update', 'data':serializer.data}, status=status.HTTP_201_CREATED)
+        else:
+            return Response({'msg':'unable to update', 'data':serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+        
+    def get(self, request):
+        try:
+            user = request.user
+            allprofile = Profile.objects.all()
+            pro_seri =Profileserializer(allprofile, many=True)
+            return Response({'msg': 'All Profile List', 'data':pro_seri.data}, status=status.HTTP_200_OK)
+        
+        except Profile.DoesNotExist:
+            return Response({'msg':'No Profile avalaible', 'data':pro_seri.errors}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

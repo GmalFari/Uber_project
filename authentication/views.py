@@ -46,5 +46,14 @@ class LoginView(APIView):
         else:
             return Response({"msg":"unable to login"}, status=status.HTTP_401_UNAUTHORIZED)
             
+
+class Logoutapi(APIView):
+    def post(self, request):
+        try:
+            user =  request.user.id
+            logout(request)
+            return Response({'msg':'Logout successfuly'}, status=status.HTTP_200_OK)
         
-            
+        except:
+            return Response({'msg':'unable to logout'}, status=status.HTTP_404_NOT_FOUND)
+

@@ -37,12 +37,13 @@ class AddDriver(models.Model):
                                      ('UP', 'UP'), ('Bihari', 'Bihari'), ('Other', 'Other')),
                             max_length=20,
                             default='MA')
-    region = models.ForeignKey(region, on_delete=models.CASCADE)
+    region= models.CharField(max_length=200, null=True, blank=True)
+    
     qualification = models.CharField(choices=(('5', '5th'), ('6', '6th'), ('7', '7th'),
                                               ('8', '8th'), ('9', '9th'), ('SSC', 'SSC'), ('HSC', 'HSC'),
                                               ('BC', 'BCOM'), ('BS', 'BSc'), ('BE', 'BE'), ('BA', 'BA')),
                                      default="SS", max_length=10)
-    driver_type = models.CharField(choices=(('parttime', 'parttime'), ('FullTime', 'FullTime')), default="Temporary", max_length=10)
+    driver_type = models.CharField(choices=(('Part Time', 'Part Time'), ('Full Time', 'Full Time')), default="Temporary", max_length=10)
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE, null=True,blank=True)
     zone = models.ForeignKey(Zone, on_delete=models.CASCADE, null=True,blank=True)
     language = models.CharField(choices=(('Hindi', 'Hindi'), ('English', 'English'), ('Bhojpuri', 'Bhojpuri')), default="Hindi", max_length=10)

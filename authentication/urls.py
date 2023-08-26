@@ -9,6 +9,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 urlpatterns = [
     path('adduser/', views.Adduser.as_view(), name='adduser'),
     path('login/',views.LoginView.as_view(), name="login"),
+    path('logout/', views.Logoutapi.as_view(), name='logout'),
     path('token-auth/', obtain_auth_token, name='api_token_auth'),  
     # path('auth/token/create/', TokenCreateView.as_view(), name='token_create'),
     # path('auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),

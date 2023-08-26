@@ -439,5 +439,22 @@ class MySubscriptionGetList(APIView):
             return Response({'error': 'Subscription not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
+class Regionapi(APIView):
+    def post(self, request):
+        data= request.data
+        region_seri=  Regionserializer(data=data)
+        if region_seri.is_valid():
+            region_seri.save()
+            return Response({'msg':'Region is added', 'data':region_seri.data}, status=status.HTTP_201_CREATED)
+        else:
+            return Response({'msg':'Region is not added', 'data':region_seri.errors}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+    def get(self, request):
+        all_regions= region.objects.all()
+        serializer =  Regionserializer(all_regions, many=True)
+        return Response({'msg':'All Region List', 'data':serializer.data}, status=status.HTTP_200_OK)
+
+
+
 def home(request):
     return render(request, 'user_master/index.html')
