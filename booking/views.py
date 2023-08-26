@@ -155,7 +155,7 @@ class BookingListWithId(APIView):
     def put(self, request, id):
         booking = PlaceBooking.objects.get(id=id)
         serializer = PlacebookingSerializer(booking, data=request.data, partial=True)
-        if serializer.is_valid:
+        if serializer.is_valid():
             serializer.save()
             return Response(request.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
