@@ -37,7 +37,8 @@ class AddDriver(models.Model):
                                      ('UP', 'UP'), ('Bihari', 'Bihari'), ('Other', 'Other')),
                             max_length=20,
                             default='MA')
-    region = models.ForeignKey(region, on_delete=models.CASCADE)
+    region= models.CharField(max_length=200, null=True, blank=True)
+    
     qualification = models.CharField(choices=(('5', '5th'), ('6', '6th'), ('7', '7th'),
                                               ('8', '8th'), ('9', '9th'), ('SSC', 'SSC'), ('HSC', 'HSC'),
                                               ('BC', 'BCOM'), ('BS', 'BSc'), ('BE', 'BE'), ('BA', 'BA')),
