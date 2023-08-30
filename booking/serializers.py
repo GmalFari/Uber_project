@@ -10,6 +10,7 @@ from authentication.serializers import NewUserSerializer
 from authentication.models import  User
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.geos import Point
+from django.contrib.gis.measure import D
 
 class ClientregistrationSerializer(serializers.ModelSerializer):
     
@@ -19,27 +20,30 @@ class ClientregistrationSerializer(serializers.ModelSerializer):
 
         
 class PlacebookingSerializer(serializers.ModelSerializer):
-    #user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=False, read_only=False)
-    user = NewUserSerializer()
-    # driver = serializers.SerializerMethodField()
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=False, read_only=False)
+    
+    drivers = serializers.SerializerMethodField()
     class Meta:
         model = PlaceBooking
         
-        fields= ['id','user','trip_type', 'from_date', 'to_date', 'car_type', 'gear_type', 'pickup_location', 'drop_location', 'booking_time', 'currunt_location']
+        fields= ['id','user','trip_type', 'from_date', 'to_date', 'car_type', 'gear_type', 'pickup_location', 'drop_location', 'booking_time', 'currunt_location', 'drivers', 'status', 'accepted_driver']
 
+  
 
-    user= serializers.SerializerMethodField()
+    def get_drivers(self, obj):
+        currunt_location = obj.currunt_location or None
+        if currunt_location is None:
+            return None
+        driver =Driverlocation.objects.all().annotate(
+            distance = Distance('driverlocation', Point(currunt_location.coords[0], currunt_location.coords, srid=currunt_location.sid))
+        ).filter(distance__lt=D(km=3))
+        if not driver.exists():
+            return {"not found"}
+        return driver.values("driver")
+    
     def get_user(self, obj):
-        return obj.user.phone
-
-    # def get_driver(self, obj):
-    #     currunt_location = obj.currunt_location or None
-    #     if currunt_location is None:
-    #         return None
-    #     driver =Driverlocation.objects.all().annotate(
-    #         distance = Distance('driverlocation', Point(currunt_location.coords[0], currunt_location.coords, srid=currunt_location.sid))
-    #     ).filter(distance__lt=D(km=3))
-
+        return {'user':obj.user.username}
+    
 
 class DriverSerializer(serializers.ModelSerializer):
     class Meta:

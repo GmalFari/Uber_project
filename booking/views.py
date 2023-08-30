@@ -7,7 +7,7 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from rest_framework.authtoken.models import Token
 from .models import *
 from .serializers import *
-from driver_management.models import AddDriver
+from driver_management.models import AddDriver, Driverlocation
 from driver_management.serializers import *
 from authentication.models import  User
 
@@ -55,7 +55,6 @@ class Userlogin(APIView):
         
 
 class MyBookingList(APIView):
-    # authentication_classes=[BasicAuthentication]
     authentication_classes=[TokenAuthentication]
     permission_classes=[IsAuthenticated]
     def post(self, request, format=None): 
@@ -63,10 +62,10 @@ class MyBookingList(APIView):
         data=request.data
 
         serializer=PlacebookingSerializer(data=data)
-       
-        driver_type=request.data.get('driver_type')
+        
+        currunt_location= request.data.get('currunt_location')
 
-        #driver_rating=request.data.get('driver_rating')
+        driver_type=request.data.get('driver_type')
 
         car_type=request.data.get('car_type')
 
@@ -74,33 +73,20 @@ class MyBookingList(APIView):
 
         driver=AddDriver.objects.all()
 
-        if driver_type:
-            driver=driver.filter(driver_type=driver_type)
-        
-        # if driver_rating:
-        #     driver=driver.filter(driver_rating=driver_rating)
+        if driver_type and car_type and transmission_type:
+            driver=driver.filter(driver_type=driver_type, car_type=car_type, transmission_type=transmission_type)
 
-        if car_type:
-            driver=driver.filter(car_type=car_type)
         
-        if transmission_type:
-            driver=driver.filter(transmission_type=transmission_type)
-        
-        def haversine_distance(self, lat1, lon1, lat2, lon2):
-        # Convert latitude and longitude from degrees to radians
-            lat1, lon1, lat2, lon2 = map(radians, [lat1, lon1, lat2, lon2])
-
-            # Haversine formula
-            dlat = lat2 - lat1
-            dlon = lon2 - lon1
-            a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
-            c = 2 * atan2(sqrt(a), sqrt(1 - a))
-            radius = 6371  # Earth's radius in kilometers
-            distance = radius * c
-
-            return distance
+            driver_location= Driverlocation.objects.all().annotate(
+                distance = Distance('driverlocation', Point(currunt_location.coords[0], currunt_location.coords, srid=currunt_location.sid))
+            ).filter(distance__lt=D(km=3))
+            
+            if not driver.exists():
+                return {"not found"}
+            return driver.values("driver")
 
         if serializer.is_valid():
+                
                 serializer.validated_data['user_id'] = user.id
                 serializer.save()
                 print(serializer.data)
@@ -113,12 +99,11 @@ class MyBookingList(APIView):
     permission_classes=[IsAuthenticated]
     def get(self, request):
         user = request.user.id
-        booking=PlaceBooking.objects.all()
+        booking=PlaceBooking.objects.all().order_by('id')
         serializer = PlacebookingSerializer(booking, many=True)
         
         return Response(serializer.data)
     
-
 
 class BookingListWithId(APIView):
     authentication_classes=[TokenAuthentication]

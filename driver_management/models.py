@@ -46,7 +46,7 @@ class AddDriver(models.Model):
     driver_type = models.CharField(choices=(('Part Time', 'Part Time'), ('Full Time', 'Full Time')), default="Temporary", max_length=10)
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE, null=True,blank=True)
     zone = models.ForeignKey(Zone, on_delete=models.CASCADE, null=True,blank=True)
-    language = models.CharField(choices=(('Hindi', 'Hindi'), ('English', 'English'), ('Bhojpuri', 'Bhojpuri')), default="Hindi", max_length=10)
+    language = models.CharField(choices=(('Hindi', 'Hindi'), ('English', 'English'), ('Bhojpuri', 'Bhojpuri')), default="Hindi", max_length=100)
 
     # Address
     t_address = models.CharField(max_length=200)
@@ -81,7 +81,7 @@ class AddDriver(models.Model):
 
     # Car Details
     car_company_name = models.CharField(max_length=15, null=True,blank=True)
-    transmission_type = models.CharField(choices=(("Manual", "Manual"), ("Automatic", "Automatic"), ("Luxury", "Luxury")), max_length=10)
+    transmission_type = models.CharField(choices=(("Manual", "Manual"), ("Automatic", "Automatic"), ("Luxury", "Luxury"), ('Both', 'Both')), max_length=10)
     car_type = models.CharField(choices=(("SUV", "SUV"), ("Sedan", "Sedan"), ("Luxury", "Luxury"), ("Hatchback", "Hatchback"),
                                          ("MPV", "MPV"), ("MUV", "MUV")),
                                 max_length=10)

@@ -31,6 +31,11 @@ class bookinguser(models.Model):
     
   
 class PlaceBooking(models.Model):
+    STATUS=(
+        ('accept','accept'),
+        ('decline', 'decline'),
+        ('pending', 'pending')
+    )
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     trip_type=models.CharField(max_length=50, null=True ,blank=True)
     from_date = models.DateField()
@@ -40,6 +45,8 @@ class PlaceBooking(models.Model):
     gear_type= models.CharField(max_length=100, null=True)
     pickup_location=models.CharField(max_length=100, null=True)
     drop_location=models.CharField(max_length=100, null=True)
+    status =  models.CharField(max_length=20, choices=STATUS, default='pending')
+    accepted_driver=  models.ForeignKey(User, on_delete=models.CASCADE, related_name='accepted_driver')
     booking_time=models.DateTimeField(auto_now_add=True)
    
 
