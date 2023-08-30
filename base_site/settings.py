@@ -7,8 +7,8 @@ from firebase_admin import credentials
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
+# GEOS_LIBRARY_PATH = 'D:\driveronhire.github.io\env\Lib\site-packages\geos'
+# GDAL_LIBRARY_PATH = 'D:\driveronhire.github.io\env\Lib\site-packages\GDAL-3.4.3.dist-info'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 

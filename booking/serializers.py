@@ -36,7 +36,7 @@ class PlacebookingSerializer(serializers.ModelSerializer):
             return None
         driver =Driverlocation.objects.all().annotate(
             distance = Distance('driverlocation', Point(currunt_location.coords[0], currunt_location.coords, srid=currunt_location.sid))
-        ).filter(distance__lt=D(km=3))
+        ).filter(distance__gt=D(km=10000))
         if not driver.exists():
             return {"not found"}
         return driver.values("driver")
