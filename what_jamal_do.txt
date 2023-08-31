@@ -1,0 +1,41 @@
+install requirement.txt 
+replace GDAl for windows for alternative for linux 
+
+
+remove env folder and make another one for me with python3 -m venv venv and then make :
+python -m pip install -r requirements.txt
+
+.env
+make .env for with this 
+
+#SECRET_KEY=ffdkdutjf-x)xwq6q(dd!4mr91h4wdr#l=49psl=^dnw07x$j0^6&7bzzk
+#DEBUG=True
+DATABASE_NAME=doh2
+DATABASE_USER=postgres
+DATABASE_PASSWORD=monu1234
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+
+create database with name doh2 and  install postgis extenstion in it 
+
+make migrate 
+find issue in createsuperuser with the type of phone 
+
+authentication/models.py
+change phone field in authentication table to models.charfield to solve this issue
+
+
+
+booking/admin.py
+add graphical interface for map on booking/admin.py
+
+
+booking/views.py 
+commit the line 59,60 for test to add locations without user
+commit line 99 and 100 because duplication of get authentication
+
+driver_management/admin 
+add graphical interface for map on booking/admin.py
+
+
+

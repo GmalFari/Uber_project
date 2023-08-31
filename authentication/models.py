@@ -36,7 +36,7 @@ class User(AbstractUser):
         ('Customer', 'Customer'),
         ('Driver', 'Driver')
     )
-    phone = models.BigIntegerField(unique=True)
+    phone = models.CharField(max_length=10,unique=True)
     usertype = models.CharField(choices=user_type, max_length=100, null=True, blank=True)
 
     USERNAME_FIELD = 'phone'

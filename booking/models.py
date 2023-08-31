@@ -43,7 +43,7 @@ class PlaceBooking(models.Model):
     to_date = models.DateField()
     currant_location = gis_point.PointField(
          geography=True, blank=True, null=True,
-        srid=4326, help_text="Point(longitude latitude)")
+        srid=4326, help_text="Point(currentlocation longitude latitude)")
     car_type=models.CharField(max_length=100, null=True)
     gear_type= models.CharField(max_length=100, null=True)
     pickup_location=models.CharField(max_length=100, null=True)
@@ -51,7 +51,10 @@ class PlaceBooking(models.Model):
     status =  models.CharField(max_length=20, choices=STATUS, default='pending')
     accepted_driver=  models.ForeignKey(User, on_delete=models.CASCADE, related_name='accepted_driver')
     booking_time=models.DateTimeField(auto_now_add=True)
-   
+   # add this for pickup_point and drop_point
+    pickup_point = gis_point.PointField(srid=4326,null=True,blank=True,geography=True)
+    drop_point = gis_point.PointField(srid=4326,null=True,blank=True,geography=True)
+
     def __str__(self):
         return self.trip_type
     

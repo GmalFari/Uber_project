@@ -56,8 +56,8 @@ class Userlogin(APIView):
         
 
 class MyBookingList(APIView):
-    authentication_classes=[TokenAuthentication]
-    permission_classes=[IsAuthenticated]
+    # authentication_classes=[TokenAuthentication]
+    # permission_classes=[IsAuthenticated]
     def post(self, request, format=None): 
         user=request.user
         data=request.data
@@ -98,8 +98,8 @@ class MyBookingList(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
         
-    authentication_classes=[TokenAuthentication]
-    permission_classes=[IsAuthenticated]
+    # authentication_classes=[TokenAuthentication]
+    # permission_classes=[IsAuthenticated]
     def get(self, request):
         user = request.user.id
         booking=PlaceBooking.objects.all().order_by('id')

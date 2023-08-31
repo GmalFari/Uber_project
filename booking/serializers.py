@@ -26,9 +26,29 @@ class PlacebookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = PlaceBooking
         
-        fields= ['id','user','trip_type', 'from_date', 'to_date', 'car_type', 'gear_type', 'pickup_location', 'drop_location', 'booking_time', 'currant_location', 'status', 'accepted_driver', 'drivers']
+        fields= ['id','user','trip_type', 'from_date', 'to_date', 'car_type', 
+                 'gear_type', 'pickup_location', 'drop_location', 'booking_time', 'currant_location', 'status', 'accepted_driver', 'drivers']
 
   
+    def get_drivers(self, obj):
+        currant_location = obj.currant_location or None
+        print(currant_location)
+        if currant_location is None:
+            return None
+        
+        drivers =Driverlocation.objects.all().annotate(
+              distance = Distance('driverlocation', currant_location)
+              ).filter(distance__lt=D(km=1000))
+        
+        print(drivers)
+        if not drivers.exists():
+            return {"not found"}
+        return drivers.values("driver")
+    
+    def get_user(self, obj):
+        return {'user':obj.user.username}
+    
+
     def create(self, validated_data):
         current_location_dict = validated_data.pop('currant_location')  # Fixed the typo here
         longitude = current_location_dict["coordinates"][0]
@@ -37,23 +57,6 @@ class PlacebookingSerializer(serializers.ModelSerializer):
         currant_location = Point(longitude, latitude, srid=4326)  # Corrected the variable name here
         validated_data['currant_location'] = currant_location
         return super().create(validated_data)
-
-    def get_drivers(self, obj):
-        currant_location = obj.currant_location or None
-        if currant_location is None:
-            return None
-        driver =Driverlocation.objects.all().annotate(
-              distance = Distance('driverlocation', currant_location)
-              ).filter(distance__gt=D(km=1000))
-        
-                     
-        if not driver.exists():
-            return {"not found"}
-        return driver.values("driver")
-    
-    def get_user(self, obj):
-        return {'user':obj.user.username}
-    
 
 class DriverSerializer(serializers.ModelSerializer):
     class Meta:

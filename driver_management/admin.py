@@ -1,6 +1,33 @@
 from django.contrib import admin
 from .models import *
 
+# #########################################jamal added #################3
+
+from django.contrib import admin
+from .models import *
+
+# this is to enable colors on the map in model page
+from django.contrib.gis.admin import GISModelAdmin
+
+# enable colors
+class DriverLocationAdmin(GISModelAdmin):
+    #tuple([field.name for field in PlaceBooking._meta.get_fields()])
+    pass
+admin.site.register( Driverlocation,DriverLocationAdmin)
+
+
+
+admin.site.register(ViewDriver)
+admin.site.register(AddDriver)
+admin.site.register(DriverHistory)
+admin.site.register(ReferDriver)
+admin.site.register(Driverleave)
+admin.site.register(DriverBalance)
+# admin.site.register(Driverlocation) # jamal commited 
+
+
+
+
 
 # class AddDriverImage(admin.ModelAdmin):
 #     readonly_fields = ['img_preview']
@@ -48,12 +75,3 @@ from .models import *
 #                        ('police_verification', 'week_off', 'scheme_type', 'driver_status'))
 #         })
 #     )
-
-
-admin.site.register(ViewDriver)
-admin.site.register(AddDriver)
-admin.site.register(DriverHistory)
-admin.site.register(ReferDriver)
-admin.site.register(Driverleave)
-admin.site.register(DriverBalance)
-admin.site.register(Driverlocation)
