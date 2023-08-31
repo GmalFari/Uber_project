@@ -10,6 +10,7 @@ from .serializers import *
 from driver_management.models import AddDriver, Driverlocation
 from driver_management.serializers import *
 from authentication.models import  User
+from firebase_admin import messaging
 
 # from geopy.geocoders import Nominatim
 # import geocoder
@@ -55,7 +56,6 @@ class Userlogin(APIView):
         
 
 class MyBookingList(APIView):
-    # authentication_classes=[BasicAuthentication]
     authentication_classes=[TokenAuthentication]
     permission_classes=[IsAuthenticated]
     def post(self, request, format=None): 
@@ -63,70 +63,37 @@ class MyBookingList(APIView):
         data=request.data
 
         serializer=PlacebookingSerializer(data=data)
-       
-        driver_type=request.data.get('driver_type')
-
-        #driver_rating=request.data.get('driver_rating')
-
-        car_type=request.data.get('car_type')
-
-        transmission_type=request.data.get('transmission_type')
-
-        driver=AddDriver.objects.all()
-
-        if driver_type:
-            driver=driver.filter(driver_type=driver_type)
-        
-        # if driver_rating:
-        #     driver=driver.filter(driver_rating=driver_rating)
-
-        if car_type:
-            driver=driver.filter(car_type=car_type)
-        
-        if transmission_type:
-            driver=driver.filter(transmission_type=transmission_type)
-        
-        def haversine_distance(self, lat1, lon1, lat2, lon2):
-        # Convert latitude and longitude from degrees to radians
-            lat1, lon1, lat2, lon2 = map(radians, [lat1, lon1, lat2, lon2])
-
-            # Haversine formula
-            dlat = lat2 - lat1
-            dlon = lon2 - lon1
-            a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
-            c = 2 * atan2(sqrt(a), sqrt(1 - a))
-            radius = 6371  # Earth's radius in kilometers
-            distance = radius * c
-
-            return distance
-
-        def get(self, request):
-            client_latitude = request.query_params.get('client_latitude')
-            client_longitude = request.query_params.get('client_longitude')
-            if not client_latitude or not client_longitude:
-                return Response([])
-
-            client_latitude = float(client_latitude)
-            client_longitude = float(client_longitude)
-
-            # Filter drivers within 3 km from the client location.
-            drivers = AddDriver.objects.all()
-            filtered_drivers = []
-
-            for driver in drivers:
-                distance = self.haversine_distance(
-                    client_latitude, client_longitude, driver.latitude, driver.longitude
-                )
-                if distance <= 3:
-                    filtered_drivers.append(driver)
-
-            serializer = DriverSerializer(filtered_drivers, many=True)
         
         if serializer.is_valid():
+
+                currant_location = serializer.validated_data.get('currant_location')
+
+                driver_type=serializer.validated_data.get('driver_type')
+
+                car_type= serializer.validated_data.get('car_type')
+
+                transmission_type=serializer.validated_data.get('transmission_type')
+    
+                driver=AddDriver.objects.filter(driver_type=driver_type, car_type=car_type, transmission_type=transmission_type)
+
+                if driver.exists():
+                     # Send notification using FCM
+                    message = messaging.Message(
+                        notification=messaging.Notification(
+                            title="New Booking",
+                            body="A new booking is available!"
+                        ),
+                        topic="Driver Booking"  # Replace with the appropriate FCM topic
+                    )
+
+                    # Send the message
+                    response = messaging.send(message)
+                    print("Notification sent:", response) 
+                    
                 serializer.validated_data['user_id'] = user.id
                 serializer.save()
                 print(serializer.data)
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
+                return Response({'data':serializer.data,"drivers":driver.data}, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
